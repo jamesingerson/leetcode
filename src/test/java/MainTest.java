@@ -66,11 +66,11 @@ class MainTest {
         var example3 = main.isValid("(]");
         assertThat(example3).isFalse();
 
-        var example4 = main.isValid("[");
-        assertThat(example4).isFalse();
+        var fail1 = main.isValid("[");
+        assertThat(fail1).isFalse();
 
-        var example5 = main.isValid("]");
-        assertThat(example5).isFalse();
+        var fail2 = main.isValid("]");
+        assertThat(fail2).isFalse();
     }
 
     @Test
@@ -108,8 +108,8 @@ class MainTest {
         var example3 = main.plusOne(new int[]{9});
         assertThat(example3).isEqualTo(new int[]{1, 0});
 
-        var example4 = main.plusOne(new int[]{9,8,7,6,5,4,3,2,1,0});
-        assertThat(example4).isEqualTo(new int[]{9,8,7,6,5,4,3,2,1,1});
+        var fail1 = main.plusOne(new int[]{9,8,7,6,5,4,3,2,1,0});
+        assertThat(fail1).isEqualTo(new int[]{9,8,7,6,5,4,3,2,1,1});
     }
 
     @Test
@@ -122,5 +122,17 @@ class MainTest {
 
         var example3 = main.fizzBuzz(15);
         assertThat(example3).isEqualTo(Arrays.asList("1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"));
+    }
+
+    @Test
+    void maxSatisfaction() {
+        var example1 = main.maxSatisfaction(new int[]{-1,-8,0,5,-9});
+        assertThat(example1).isEqualTo(14);
+
+        var example2 = main.maxSatisfaction(new int[]{4,3,2});
+        assertThat(example2).isEqualTo(20);
+
+        var example3 = main.maxSatisfaction(new int[]{-1,-4,-5});
+        assertThat(example3).isEqualTo(0);
     }
 }

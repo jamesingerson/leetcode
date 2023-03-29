@@ -203,4 +203,30 @@ public class Main {
         // reset them if their condition(s) are met.
         // Can also make it look better with ternary operators.
     }
+
+    public int maxSatisfaction(int[] satisfaction) {
+        // https://leetcode.com/problems/reducing-dishes/
+        // sort the array so we have the highest output dish first
+        Arrays.sort(satisfaction);
+        int dishSum = 0;
+        int dishValue = 0;
+        // Largest to smallest value
+        for (int i = satisfaction.length - 1; i >= 0; i--) {
+            // Add the new value to our "active" value
+            dishValue += satisfaction[i];
+            // if it's beneficial to make the new dish
+            if (dishValue > 0) {
+                // add the new fish + the value of all previous dishes
+                // this is where the "time coefficient" lives
+                dishSum += dishValue;
+            }
+        }
+        return dishSum;
+    }
+
+    // Notes:
+    // Didn't really have any business solving this problem myself.
+    // Reviewed the solutions and loved it. It's actually so simple.
+    // The whole problem can be broken down to "multiplying is just
+    // adding repeatedly".
 }
