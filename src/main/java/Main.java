@@ -1,0 +1,206 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+    }
+
+    int doubler(int toDouble) {
+        return toDouble * 2;
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        // https://leetcode.com/problems/two-sum/
+        Map<Integer, Integer> sumCandidates = new HashMap<>();
+        // for each num
+        for (int i = 0; i < nums.length; i++) {
+            // try find the complement (target - nums[i])
+            if (sumCandidates.containsKey(target - nums[i])) {
+                // return indices on success
+                return new int[]{sumCandidates.get(target - nums[i]), i};
+            }
+            // stash on failed look up
+            sumCandidates.put(nums[i], i);
+        }
+        // return empty on fail
+        return new int[]{};
+
+        // Notes:
+        // Initially tried to dump everything into the map, then go over it.
+        // That was slightly more code and messier, also used a bit more space.
+        // Either way, the outcome was linear time and space performance O(n).
+    }
+
+    public boolean isPalindrome(int x) {
+        // https://leetcode.com/problems/palindrome-number/
+        int original = x;
+        int reverse = 0;
+        // all negative numbers are false
+        if (x < 0) {
+            return false;
+        }
+
+        // we can reverse the number by "popping" the digits with modulo
+        while (x != 0) {
+            int oneDigit = x % 10;
+            reverse = reverse * 10 + oneDigit;
+            x /= 10;
+        }
+        return reverse == original;
+
+        // Notes:
+        // There is further optimization here by looking at only half the number.
+    }
+
+    public int romanToInt(String s) {
+        // https://leetcode.com/problems/roman-to-integer/
+        Map<Character, Integer> numeralMap = new HashMap<>();
+        numeralMap.put('I', 1);
+        numeralMap.put('V', 5);
+        numeralMap.put('X', 10);
+        numeralMap.put('L', 50);
+        numeralMap.put('C', 100);
+        numeralMap.put('D', 500);
+        numeralMap.put('M', 1000);
+
+        char[] numeralArray = s.toCharArray();
+        int sum = 0;
+        int previous = 0;
+
+        // Work from the back
+        for (int i = numeralArray.length - 1; i >= 0; i--) {
+            int toModifyBy = numeralMap.get(numeralArray[i]);
+            // only add if larger than the last number
+            // subtract if e.g. IV (5 - 1 = 4)
+            if (toModifyBy >= previous) {
+                sum += toModifyBy;
+            } else {
+                sum -= toModifyBy;
+            }
+            previous = toModifyBy;
+        }
+
+        return sum;
+
+        // Notes:
+        // Can optimize with a switch for the values rather than a map.
+    }
+
+    public boolean isValid(String s) {
+        // https://leetcode.com/problems/valid-parentheses/
+        char[] brackets = s.toCharArray();
+        Stack<Character> bracketStack = new Stack<Character>();
+
+        for (char bracket : brackets) {
+            if ("([{".indexOf(bracket) > -1) {
+                bracketStack.push(bracket);
+            } else if (bracketStack.isEmpty()) {
+                return false;
+            } else {
+                char inspect = bracketStack.pop();
+                switch (inspect) {
+                    case '(':
+                        if (bracket != ')') return false;
+                        break;
+                    case '[':
+                        if (bracket != ']') return false;
+                        break;
+                    case '{':
+                        if (bracket != '}') return false;
+                        break;
+                    default:
+                        return false;
+                }
+            }
+        }
+        return bracketStack.empty();
+
+        // Notes:
+        // Messed this up a couple of times because I hadn't accounted for
+        // edge cases. This can be made better with a single switch with
+        // fall through for each bracket. Can also push and pop in one switch.
+    }
+
+    public int strStr(String haystack, String needle) {
+        // https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/
+        // I assume this is unacceptable.
+        //return haystack.indexOf(needle);
+        int needleLength = needle.length();
+        for (int i = 0; i <= haystack.length() - needleLength; i++) {
+            if (haystack.substring(i, needleLength + i).equals(needle)) {
+                return i;
+            }
+        }
+        return -1;
+
+        // Notes:
+        // Messed this up because thought I was looking for prefix
+        // (brain muddled from previous problem).
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        // https://leetcode.com/problems/search-insert-position/
+        // This is just an odd case of binary search
+        int low = 0;
+        int high = nums.length - 1;
+        int middle = 0;
+
+        while (low <= high) {
+            middle = (low + high) / 2;
+            if (nums[middle] > target) {
+                high = middle - 1;
+            } else if (nums[middle] < target) {
+                low = middle + 1;
+            } else {
+                return middle;
+            }
+        }
+        return nums[middle] < target ? middle + 1 : middle;
+
+        // Notes:
+        // The slight modification to return is the secret sauce
+        // that varies this from a simple search. But it might be
+        // possible to return low instead?
+    }
+
+    public int[] plusOne(int[] digits) {
+        // https://leetcode.com/problems/plus-one/
+        for (int i = digits.length -1 ; i >= 0; i--) {
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+            digits[i] = 0;
+        }
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits;
+
+        // Note:
+        // Tried to do this with a cheeky string conversion,
+        // got bit by overflow.
+    }
+
+    public List<String> fizzBuzz(int n) {
+        // https://leetcode.com/problems/fizz-buzz/
+        List<String> fizzBuzz = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (i % 5 == 0 && i % 3 == 0) {
+                fizzBuzz.add("FizzBuzz");
+            } else if (i % 5 == 0) {
+                fizzBuzz.add("Buzz");
+            } else if (i % 3 == 0) {
+                fizzBuzz.add("Fizz");
+            } else {
+                fizzBuzz.add(Integer.toString(i));
+            }
+        }
+        return fizzBuzz;
+
+        // Notes:
+        // Classic problem. Interesting discussion about doing it without %
+        // Make separate fizz and buzz vars and increment them each loop,
+        // reset them if their condition(s) are met.
+        // Can also make it look better with ternary operators.
+    }
+}
