@@ -125,14 +125,27 @@ class MainTest {
     }
 
     @Test
-    void maxSatisfaction() {
-        var example1 = main.maxSatisfaction(new int[]{-1,-8,0,5,-9});
-        assertThat(example1).isEqualTo(14);
+    void maximumWealth() {
+        var example1 = main.maximumWealth(new int[][]{{1, 2, 3}, {3, 2, 1}});
+        assertThat(example1).isEqualTo(6);
 
-        var example2 = main.maxSatisfaction(new int[]{4,3,2});
-        assertThat(example2).isEqualTo(20);
+        var example2 = main.maximumWealth(new int[][]{{1,5},{7,3},{3,5}});
+        assertThat(example2).isEqualTo(10);
 
-        var example3 = main.maxSatisfaction(new int[]{-1,-4,-5});
-        assertThat(example3).isEqualTo(0);
+        var example3 = main.maximumWealth(new int[][]{{2,8,7},{7,1,3},{1,9,5}});
+        assertThat(example3).isEqualTo(17);
     }
+
+    @Test
+    void numberOfSteps() {
+        var example1 = main.numberOfSteps(14);
+        assertThat(example1).isEqualTo(6);
+
+        var example2 = main.numberOfSteps(8);
+        assertThat(example2).isEqualTo(4);
+
+        var example3 = main.numberOfSteps(123);
+        assertThat(example3).isEqualTo(12);
+    }
+
 }
