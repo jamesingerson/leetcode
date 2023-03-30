@@ -251,4 +251,19 @@ public class Main {
         }
         return steps;
     }
+
+    public String defangIPaddr(String address) {
+        return address.replace(".", "[.]");
+    }
+
+    public String sortSentence(String s) {
+        String[] numberedWords = s.split(" ");
+        String[] sentence = new String[numberedWords.length];
+        for (String numberedWord : numberedWords) {
+            int i = Integer.parseInt(String.valueOf(numberedWord.charAt(numberedWord.length() - 1))) - 1;
+            String rawWord = numberedWord.substring(0, numberedWord.length() - 1);
+            sentence[i] = rawWord;
+        }
+        return String.join(" ", sentence);
+    }
 }

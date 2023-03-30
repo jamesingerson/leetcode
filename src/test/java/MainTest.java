@@ -148,4 +148,21 @@ class MainTest {
         assertThat(example3).isEqualTo(12);
     }
 
+    @Test
+    void defangIPaddr() {
+        var example1 = main.defangIPaddr("1.1.1.1");
+        assertThat(example1).isEqualTo("1[.]1[.]1[.]1");
+
+        var example2 = main.defangIPaddr("255.100.50.0");
+        assertThat(example2).isEqualTo("255[.]100[.]50[.]0");
+    }
+
+    @Test
+    void sortSentence() {
+        var example1 = main.sortSentence("is2 sentence4 This1 a3");
+        assertThat(example1).isEqualTo("This is a sentence");
+
+        var example2 = main.sortSentence("Myself2 Me1 I4 and3");
+        assertThat(example2).isEqualTo("Me Myself and I");
+    }
 }

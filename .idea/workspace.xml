@@ -61,12 +61,12 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MainTest.numberOfSteps">
-    <configuration name="MainTest.fizzBuzz" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.MainTest.sortSentence">
+    <configuration name="MainTest.defangIPaddr" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="fizzBuzz" />
+      <option name="METHOD_NAME" value="defangIPaddr" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -102,11 +102,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.plusOne" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MainTest.sortSentence" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="plusOne" />
+      <option name="METHOD_NAME" value="sortSentence" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,11 +114,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MainTest.sortSentence" />
+        <item itemvalue="JUnit.MainTest.defangIPaddr" />
         <item itemvalue="JUnit.MainTest.numberOfSteps" />
         <item itemvalue="JUnit.MainTest.maximumWealth" />
         <item itemvalue="JUnit.MainTest.maxSatisfaction" />
-        <item itemvalue="JUnit.MainTest.fizzBuzz" />
-        <item itemvalue="JUnit.MainTest.plusOne" />
       </list>
     </recent_temporary>
   </component>
