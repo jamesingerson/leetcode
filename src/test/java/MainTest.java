@@ -210,4 +210,44 @@ class MainTest {
         var example3 = main.runningSum(new int[]{3, 1, 2, 10, 1});
         assertThat(example3).isEqualTo(new int[]{3, 4, 6, 16, 17});
     }
+
+    @Test
+    void finalValueAfterOperations() {
+        var example1 = main.finalValueAfterOperations(new String[]{"--X", "X++", "X++"});
+        assertThat(example1).isEqualTo(1);
+
+        var example2 = main.finalValueAfterOperations(new String[]{"++X", "++X", "X++"});
+        assertThat(example2).isEqualTo(3);
+
+        var example3 = main.finalValueAfterOperations(new String[]{"X++", "++X", "--X", "X--"});
+        assertThat(example3).isEqualTo(0);
+    }
+
+    @Test
+    void checkIfPangram() {
+        var example1 = main.checkIfPangram("thequickbrownfoxjumpsoverthelazydog");
+        assertThat(example1).isTrue();
+
+        var example2 = main.checkIfPangram("leetcode");
+        assertThat(example2).isFalse();
+    }
+
+    @Test
+    void checkTree() {
+        var example1 = main.checkTree(
+                new TreeNode(
+                        10,
+                        new TreeNode(4),
+                        new TreeNode(6)
+                ));
+        assertThat(example1).isTrue();
+
+        var example2 = main.checkTree(
+                new TreeNode(
+                        5,
+                        new TreeNode(3),
+                        new TreeNode(1)
+                ));
+        assertThat(example2).isFalse();
+    }
 }

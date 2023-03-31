@@ -328,5 +328,36 @@ public class Main {
         // Not as performant as raw loops, but good 'n' proper use of streams.
     }
 
+    public int finalValueAfterOperations(String[] operations) {
+        int i = 0;
+        for (String operation: operations) {
+            switch (operation) {
+                case "++X", "X++" -> i++;
+                case "--X", "X--" -> i--;
+            }
+        }
+        return i;
+    }
+
+    public boolean checkIfPangram(String sentence) {
+        Set<Character> charSet = new HashSet<>();
+        for (Character c : sentence.toCharArray()) {
+            charSet.add(c);
+        }
+        return charSet.size() == 26;
+    }
+
+    public double[] convertTemperature(double celsius) {
+        return new double[]{celsius + 273.15, celsius * 1.80 + 32.00};
+    }
+
+    public int sum(int num1, int num2) {
+        return num1 + num2;
+    }
+
+    public boolean checkTree(TreeNode root) {
+        return root.left.val + root.right.val == root.val;
+    }
+
 
 }
