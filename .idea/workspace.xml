@@ -61,42 +61,42 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MainTest.sortSentence">
-    <configuration name="MainTest.defangIPaddr" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.MainTest.runningSum">
+    <configuration name="MainTest.getConcatenation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="defangIPaddr" />
+      <option name="METHOD_NAME" value="getConcatenation" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.maxSatisfaction" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MainTest.numIdenticalPairs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="maxSatisfaction" />
+      <option name="METHOD_NAME" value="numIdenticalPairs" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.maximumWealth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MainTest.runningSum" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="maximumWealth" />
+      <option name="METHOD_NAME" value="runningSum" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.numberOfSteps" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MainTest.shuffle" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="leetcode" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="numberOfSteps" />
+      <option name="METHOD_NAME" value="shuffle" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,11 +114,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MainTest.runningSum" />
+        <item itemvalue="JUnit.MainTest.numIdenticalPairs" />
+        <item itemvalue="JUnit.MainTest.shuffle" />
+        <item itemvalue="JUnit.MainTest.getConcatenation" />
         <item itemvalue="JUnit.MainTest.sortSentence" />
-        <item itemvalue="JUnit.MainTest.defangIPaddr" />
-        <item itemvalue="JUnit.MainTest.numberOfSteps" />
-        <item itemvalue="JUnit.MainTest.maximumWealth" />
-        <item itemvalue="JUnit.MainTest.maxSatisfaction" />
       </list>
     </recent_temporary>
   </component>

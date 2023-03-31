@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     public static void main(String[] args) {
@@ -266,4 +267,66 @@ public class Main {
         }
         return String.join(" ", sentence);
     }
+
+    public int[] getConcatenation(int[] nums) {
+        int[] ans = new int[nums.length * 2];
+        for (int i = 0; i < nums.length; i++) {
+            ans[i] = nums[i];
+            ans[i + nums.length] = nums[i];
+        }
+        return ans;
+    }
+
+    public int[] shuffle(int[] nums, int n) {
+        int[] ans = new int[nums.length];
+        int xpos = 0;
+        int ypos = 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (i < n) {
+                ans[xpos] = nums[i];
+                xpos += 2;
+                continue;
+            }
+            ans[ypos] = nums[i];
+            ypos += 2;
+        }
+        return ans;
+
+        // Notes:
+        // I had a more elegant idea at the start but couldn't
+        // figure out the secret sauce I needed. Funnily enough,
+        // the +=2 here is the trick.
+
+        // for(int i=0; i< n;i++){
+        //     arr[count] = nums[i];
+        //     arr[count+1]=nums[i+n];
+        //     count +=2;
+        // }
+    }
+
+    public int numIdenticalPairs(int[] nums) {
+        int goodPairs = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i; j < nums.length; j++) {
+                if (nums[i] == nums[j] && i < j) {
+                    goodPairs++;
+                }
+            }
+        }
+        return goodPairs;
+
+        // Notes:
+        // One shot this :D
+        // Been fumbling a lot with "off by one" errors, but got this right.
+    }
+
+    public int[] runningSum(int[] nums) {
+        AtomicInteger runSum = new AtomicInteger(0);
+        return Arrays.stream(nums).map(runSum::addAndGet).toArray();
+
+        // Notes:
+        // Not as performant as raw loops, but good 'n' proper use of streams.
+    }
+
+
 }

@@ -108,20 +108,20 @@ class MainTest {
         var example3 = main.plusOne(new int[]{9});
         assertThat(example3).isEqualTo(new int[]{1, 0});
 
-        var fail1 = main.plusOne(new int[]{9,8,7,6,5,4,3,2,1,0});
-        assertThat(fail1).isEqualTo(new int[]{9,8,7,6,5,4,3,2,1,1});
+        var fail1 = main.plusOne(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0});
+        assertThat(fail1).isEqualTo(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 1});
     }
 
     @Test
     void fizzBuzz() {
         var example1 = main.fizzBuzz(3);
-        assertThat(example1).isEqualTo(Arrays.asList("1","2","Fizz"));
+        assertThat(example1).isEqualTo(Arrays.asList("1", "2", "Fizz"));
 
         var example2 = main.fizzBuzz(5);
-        assertThat(example2).isEqualTo(Arrays.asList("1","2","Fizz","4","Buzz"));
+        assertThat(example2).isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz"));
 
         var example3 = main.fizzBuzz(15);
-        assertThat(example3).isEqualTo(Arrays.asList("1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"));
+        assertThat(example3).isEqualTo(Arrays.asList("1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"));
     }
 
     @Test
@@ -129,10 +129,10 @@ class MainTest {
         var example1 = main.maximumWealth(new int[][]{{1, 2, 3}, {3, 2, 1}});
         assertThat(example1).isEqualTo(6);
 
-        var example2 = main.maximumWealth(new int[][]{{1,5},{7,3},{3,5}});
+        var example2 = main.maximumWealth(new int[][]{{1, 5}, {7, 3}, {3, 5}});
         assertThat(example2).isEqualTo(10);
 
-        var example3 = main.maximumWealth(new int[][]{{2,8,7},{7,1,3},{1,9,5}});
+        var example3 = main.maximumWealth(new int[][]{{2, 8, 7}, {7, 1, 3}, {1, 9, 5}});
         assertThat(example3).isEqualTo(17);
     }
 
@@ -164,5 +164,50 @@ class MainTest {
 
         var example2 = main.sortSentence("Myself2 Me1 I4 and3");
         assertThat(example2).isEqualTo("Me Myself and I");
+    }
+
+    @Test
+    void getConcatenation() {
+        var example1 = main.getConcatenation(new int[]{1, 2, 1});
+        assertThat(example1).isEqualTo(new int[]{1, 2, 1, 1, 2, 1});
+
+        var example2 = main.getConcatenation(new int[]{1, 3, 2, 1});
+        assertThat(example2).isEqualTo(new int[]{1, 3, 2, 1, 1, 3, 2, 1});
+    }
+
+    @Test
+    void shuffle() {
+        var example1 = main.shuffle(new int[]{2, 5, 1, 3, 4, 7}, 3);
+        assertThat(example1).isEqualTo(new int[]{2, 3, 5, 4, 1, 7});
+
+        var example2 = main.shuffle(new int[]{1, 2, 3, 4, 4, 3, 2, 1}, 4);
+        assertThat(example2).isEqualTo(new int[]{1, 4, 2, 3, 3, 2, 4, 1});
+
+        var example3 = main.shuffle(new int[]{1, 1, 2, 2}, 2);
+        assertThat(example3).isEqualTo(new int[]{1, 2, 1, 2});
+    }
+
+    @Test
+    void numIdenticalPairs() {
+        var example1 = main.numIdenticalPairs(new int[]{1, 2, 3, 1, 1, 3});
+        assertThat(example1).isEqualTo(4);
+
+        var example2 = main.numIdenticalPairs(new int[]{1, 1, 1, 1});
+        assertThat(example2).isEqualTo(6);
+
+        var example3 = main.numIdenticalPairs(new int[]{1, 2, 3});
+        assertThat(example3).isEqualTo(0);
+    }
+
+    @Test
+    void runningSum() {
+        var example1 = main.runningSum(new int[]{1, 2, 3, 4});
+        assertThat(example1).isEqualTo(new int[]{1, 3, 6, 10});
+
+        var example2 = main.runningSum(new int[]{1, 1, 1, 1, 1});
+        assertThat(example2).isEqualTo(new int[]{1, 2, 3, 4, 5});
+
+        var example3 = main.runningSum(new int[]{3, 1, 2, 10, 1});
+        assertThat(example3).isEqualTo(new int[]{3, 4, 6, 16, 17});
     }
 }
