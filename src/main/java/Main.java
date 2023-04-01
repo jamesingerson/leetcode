@@ -166,7 +166,7 @@ public class Main {
 
     public int[] plusOne(int[] digits) {
         // https://leetcode.com/problems/plus-one/
-        for (int i = digits.length -1 ; i >= 0; i--) {
+        for (int i = digits.length - 1; i >= 0; i--) {
             if (digits[i] < 9) {
                 digits[i]++;
                 return digits;
@@ -330,7 +330,7 @@ public class Main {
 
     public int finalValueAfterOperations(String[] operations) {
         int i = 0;
-        for (String operation: operations) {
+        for (String operation : operations) {
             switch (operation) {
                 case "++X", "X++" -> i++;
                 case "--X", "X--" -> i--;
@@ -359,5 +359,117 @@ public class Main {
         return root.left.val + root.right.val == root.val;
     }
 
+    public int kItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k) {
+        if (k <= numOnes) {
+            return k;
+        }
 
+        if (k <= numOnes + numZeros) {
+            return numOnes;
+        }
+
+        return numOnes - (k - numOnes - numZeros);
+    }
+
+    public int[] evenOddBit(int n) {
+        StringBuilder reverseBinary = new StringBuilder();
+        reverseBinary.append(Integer.toBinaryString(n)).reverse();
+        char[] binary = reverseBinary.toString().toCharArray();
+
+        int even = 0;
+        int odd = 0;
+        for (int i = 0; i < binary.length; i++) {
+            if (i % 2 == 0) {
+                if (binary[i] == '1') {
+                    even++;
+                }
+            } else if (binary[i] == '1') {
+                odd++;
+            }
+        }
+        return new int[]{even, odd};
+
+        // Notes:
+        // Could've checked if the char is one then checked if even otherwise
+        // incremented odd. Would've been tidier.
+        // There's also some fancy bit stuff you can do.
+    }
+
+    public int vowelStrings(String[] words, int left, int right) {
+        return Arrays.stream(words, left, right + 1)
+                .mapToInt(x -> (
+                        "aeiou".indexOf(x.charAt(0)) != -1 &&
+                                "aeiou".indexOf(x.charAt(x.length() - 1)) != -1
+                ) ? 1 : 0).sum();
+    }
+
+    public int passThePillow(int n, int time) {
+        // it takes 2n - 2 time for the pillow to be back at the start
+        // pillow changes direction every n - 1 time
+
+        // we only care about difference from starting position
+        time %= (2 * n - 2);
+
+        // if were moving forward, we just return time + 1
+        if (time <= n - 1) {
+            return 1 + time;
+        }
+
+        // if we're moving backwards, we subtract abs(n - 1 - time)
+        return n - (-1 * (n - 1 - time));
+
+        // Notes:
+        // The last formula was a pain. It was difficult to figure out
+        // where this was falling apart.
+    }
+
+    public int splitNum(int num) {
+        int numLength = (int) Math.log10(num) + 1;
+        int[] nums = new int[numLength];
+        int i = 0;
+        while (num > 0) {
+            nums[i] = num % 10;
+            num /= 10;
+            i++;
+        }
+        Arrays.sort(nums);
+        int num1 = 0;
+        int num2 = 0;
+        for (i = 0; i <= numLength - 1; i++) {
+            if (i % 2 != 0) {
+                num1 *= 10;
+                num1 += nums[i];
+                continue;
+            }
+            num2 *= 10;
+            num2 += nums[i];
+        }
+        return num1 + num2;
+
+        // Notes:
+        // Lots of other solutions did string tricks. I don't think
+        // that's the best/correct/proper way. The while loop here
+        // feels awkward, though. Could've done fori using numLength?
+    }
+
+    public long pickGifts(int[] gifts, int k) {
+        for (int i = 1; i <= k; i++) {
+            int highestIndex = 0;
+            for (int j = 1; j < gifts.length; j++) {
+                if (gifts[j] > gifts[highestIndex]) {
+                    highestIndex = j;
+                }
+            }
+            gifts[highestIndex] = (int) Math.floor(Math.sqrt(gifts[highestIndex]));
+        }
+        long sum = 0;
+        for (int i : gifts) {
+            sum += i;
+        }
+        return sum;
+
+        // Notes:
+        // As usual I got bit by not reading things properly.
+        // Needed a long to sum everything.
+    }
 }
