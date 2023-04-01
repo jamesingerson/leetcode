@@ -254,10 +254,12 @@ public class Main {
     }
 
     public String defangIPaddr(String address) {
+        // https://leetcode.com/problems/defanging-an-ip-address/
         return address.replace(".", "[.]");
     }
 
     public String sortSentence(String s) {
+        // https://leetcode.com/problems/sorting-the-sentence/
         String[] numberedWords = s.split(" ");
         String[] sentence = new String[numberedWords.length];
         for (String numberedWord : numberedWords) {
@@ -269,6 +271,7 @@ public class Main {
     }
 
     public int[] getConcatenation(int[] nums) {
+        // https://leetcode.com/problems/concatenation-of-array/
         int[] ans = new int[nums.length * 2];
         for (int i = 0; i < nums.length; i++) {
             ans[i] = nums[i];
@@ -278,6 +281,7 @@ public class Main {
     }
 
     public int[] shuffle(int[] nums, int n) {
+        // https://leetcode.com/problems/shuffle-the-array/
         int[] ans = new int[nums.length];
         int xpos = 0;
         int ypos = 1;
@@ -305,6 +309,7 @@ public class Main {
     }
 
     public int numIdenticalPairs(int[] nums) {
+        // https://leetcode.com/problems/number-of-good-pairs/
         int goodPairs = 0;
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i; j < nums.length; j++) {
@@ -321,6 +326,7 @@ public class Main {
     }
 
     public int[] runningSum(int[] nums) {
+        // https://leetcode.com/problems/running-sum-of-1d-array/
         AtomicInteger runSum = new AtomicInteger(0);
         return Arrays.stream(nums).map(runSum::addAndGet).toArray();
 
@@ -329,6 +335,7 @@ public class Main {
     }
 
     public int finalValueAfterOperations(String[] operations) {
+        // https://leetcode.com/problems/final-value-of-variable-after-performing-operations/
         int i = 0;
         for (String operation : operations) {
             switch (operation) {
@@ -340,6 +347,7 @@ public class Main {
     }
 
     public boolean checkIfPangram(String sentence) {
+        // https://leetcode.com/problems/check-if-the-sentence-is-pangram/
         Set<Character> charSet = new HashSet<>();
         for (Character c : sentence.toCharArray()) {
             charSet.add(c);
@@ -348,18 +356,22 @@ public class Main {
     }
 
     public double[] convertTemperature(double celsius) {
+        // https://leetcode.com/problems/convert-the-temperature/
         return new double[]{celsius + 273.15, celsius * 1.80 + 32.00};
     }
 
     public int sum(int num1, int num2) {
+        // https://leetcode.com/problems/add-two-integers/
         return num1 + num2;
     }
 
     public boolean checkTree(TreeNode root) {
+        // https://leetcode.com/problems/root-equals-sum-of-children/
         return root.left.val + root.right.val == root.val;
     }
 
     public int kItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k) {
+        // https://leetcode.com/problems/k-items-with-the-maximum-sum/
         if (k <= numOnes) {
             return k;
         }
@@ -372,6 +384,7 @@ public class Main {
     }
 
     public int[] evenOddBit(int n) {
+        // https://leetcode.com/problems/number-of-even-and-odd-bits/
         StringBuilder reverseBinary = new StringBuilder();
         reverseBinary.append(Integer.toBinaryString(n)).reverse();
         char[] binary = reverseBinary.toString().toCharArray();
@@ -396,6 +409,7 @@ public class Main {
     }
 
     public int vowelStrings(String[] words, int left, int right) {
+        // https://leetcode.com/problems/count-the-number-of-vowel-strings-in-range/
         return Arrays.stream(words, left, right + 1)
                 .mapToInt(x -> (
                         "aeiou".indexOf(x.charAt(0)) != -1 &&
@@ -404,6 +418,8 @@ public class Main {
     }
 
     public int passThePillow(int n, int time) {
+        // https://leetcode.com/problems/pass-the-pillow/
+
         // it takes 2n - 2 time for the pillow to be back at the start
         // pillow changes direction every n - 1 time
 
@@ -424,6 +440,7 @@ public class Main {
     }
 
     public int splitNum(int num) {
+        // https://leetcode.com/problems/split-with-minimum-sum/
         int numLength = (int) Math.log10(num) + 1;
         int[] nums = new int[numLength];
         int i = 0;
@@ -453,6 +470,7 @@ public class Main {
     }
 
     public long pickGifts(int[] gifts, int k) {
+        // https://leetcode.com/problems/take-gifts-from-the-richest-pile/
         for (int i = 1; i <= k; i++) {
             int highestIndex = 0;
             for (int j = 1; j < gifts.length; j++) {
