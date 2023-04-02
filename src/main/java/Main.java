@@ -1,3 +1,6 @@
+import com.sun.source.tree.Tree;
+
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -489,5 +492,203 @@ public class Main {
         // Notes:
         // As usual I got bit by not reading things properly.
         // Needed a long to sum everything.
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        // https://leetcode.com/problems/longest-common-prefix/
+        if (strs.length == 0) {
+            return "";
+        }
+
+        if (strs.length == 1) {
+            return strs[0];
+        }
+
+        Arrays.sort(strs);
+        char[] word1 = strs[0].toCharArray();
+        char[] word2 = strs[strs.length - 1].toCharArray();
+        int i = 0;
+
+        for (i = 0; i <= word1.length - 1; i++) {
+            if (word1[i] != word2[i]) {
+                break;
+            }
+        }
+        return String.valueOf(word1).substring(0, i);
+
+        // Notes:
+        // I made a lot of mistakes and got bitten by nearly
+        // every test case on this one :\
+    }
+
+    public int search(int[] nums, int target) {
+        // https://leetcode.com/problems/binary-search/
+        int min = 0;
+        int max = nums.length - 1;
+
+        while (min <= max) {
+            int index = (min + max) / 2;
+            if (nums[index] == target) {
+                return index;
+            }
+            if (nums[index] > target) {
+                max = index - 1;
+            }
+            if (nums[index] < target) {
+                min = index + 1;
+            }
+        }
+        return -1;
+        // Notes:
+        // Still messing up adjusting max and min.
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        // https://leetcode.com/problems/merge-two-sorted-lists/
+        ListNode sortedListMarker = new ListNode(-1);
+        ListNode currentNode = sortedListMarker;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                currentNode.next = list1;
+                list1 = list1.next;
+            } else {
+                currentNode.next = list2;
+                list2 = list2.next;
+            }
+            currentNode = currentNode.next;
+        }
+
+        if (list1 == null) {
+            currentNode.next = list2;
+        } else {
+            currentNode.next = list1;
+        }
+        return sortedListMarker.next;
+
+        // Notes:
+        // I had very a very strong idea but it was slightly off.
+        // Can't get IDE tests to work for this without extra work.
+    }
+
+    public int removeDuplicates(int[] nums) {
+        // https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+        int lastLargest = 1;
+        int countUniqueNums = 1;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = lastLargest; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    lastLargest++;
+                    continue;
+                }
+                nums[i + 1] = nums[j];
+                countUniqueNums++;
+                break;
+            }
+        }
+
+        return countUniqueNums;
+    }
+
+    public int removeElement(int[] nums, int val) {
+        // https://leetcode.com/problems/remove-element/
+        int position = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[position] = nums[i];
+                position++;
+            }
+        }
+        return position;
+
+        // Notes:
+        // I really over-engineered this trying to do clever things moving
+        // values from the end of the array. All it really takes is building
+        // a new array of unique values.
+    }
+
+    public int lengthOfLastWord(String s) {
+        // https://leetcode.com/problems/length-of-last-word/
+        s = s.trim();
+        int index = s.lastIndexOf(" ");
+        String lastWord = s.substring(index + 1);
+        return lastWord.length();
+    }
+
+    public int[] successfulPairsFail(int[] spells, int[] potions, long success) {
+        // https://leetcode.com/problems/successful-pairs-of-spells-and-potions/
+        return Arrays.stream(spells)
+                .map(x -> (int) Arrays.stream(potions)
+                        .mapToLong(y -> (long) y * x)
+                        .filter(z -> z >= success)
+                        .count())
+                .toArray();
+        // Notes:
+        // This solution produces the correct output but hits
+        // the execution time limit because it's brute force.
+        // The correct approach is to sort the potions and
+        // calculate the needed value and indexing into that.
+        // Leverage a tree map +
+        // long need = (success + spells[i] - 1) / spells[i];
+        //     spells[i] = potions.length - map.ceilingEntry(need).getValue();
+
+        // Another approach is to implement binary search on
+        // indexing into the potions array.
+        // long product = (long) spell * potions[mid];
+        // if (product >= success)
+    }
+
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        // https://leetcode.com/problems/successful-pairs-of-spells-and-potions/
+        int n = spells.length;
+        int m = potions.length;
+        int[] casts = new int[n];
+        Arrays.sort(potions);
+        // For each spell
+        for (int i = 0; i < n; i++) {
+            int spell = spells[i];
+            int min = 0;
+            int max = m - 1;
+            // Binary search the potions
+            while (min <= max) {
+                int mid = (min + max) / 2;
+                // Trying to find out if the target index
+                // will make a successful cast
+                long product = (long) spell * potions[mid];
+                if (product >= success) {
+                    max = mid - 1;
+                } else {
+                    min = mid + 1;
+                }
+            }
+            // Store the number of successful casts
+            // offset array length by floor value
+            casts[i] = m - min;
+        }
+        return casts;
+    }
+
+    public int mySqrt(int x) {
+        // https://leetcode.com/problems/sqrtx/
+        int max = x;
+        int min = 0;
+        int mid = min + (max - min) / 2;
+        while (min <= max) {
+            mid = (min + max) / 2;
+            long square = (long) mid * mid;
+            if (square == x) {
+                return (int) mid;
+            }
+            if (square >= x) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return max;
+
+        // Notes:
+        // Originally had max as Integer.MAX_VALUE.
+        // Later realised that x itself is the ceiling.
     }
 }
