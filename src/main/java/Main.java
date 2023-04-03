@@ -691,4 +691,95 @@ public class Main {
         // Originally had max as Integer.MAX_VALUE.
         // Later realised that x itself is the ceiling.
     }
+
+    public int maxProfit(int[] prices) {
+        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+        int lowest = Integer.MAX_VALUE;
+        int highest = -1;
+        int bestSeen = 0;
+
+        for (int price : prices) {
+            if (price < lowest) {
+                lowest = price;
+                highest = -1;
+            }
+            if (price > highest) {
+                highest = price;
+                if (highest - lowest > bestSeen) {
+                    bestSeen = highest - lowest;
+                }
+            }
+        }
+
+        return bestSeen;
+
+        // Notes:
+        // First attempt didn't account for the possibility that the
+        // most efficient trade might not be the final trade tracked.
+        // I also made a dumb mistake where I used the for each loop
+        // syntax then tried to index into the array with the value.
+    }
+
+    public boolean isPalindrome(String s) {
+        // https://leetcode.com/problems/valid-palindrome/
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        String sReverse = new StringBuilder(s).reverse().toString().toLowerCase();
+        return s.equals(sReverse) || s.length() == 0;
+
+        // Notes:
+        // This is the simple, yet slow way.
+        // It is obviously faster to leverage character comparisons
+        // in a char array, converging towards the middle or only looking
+        // at half the string.
+        // There is also the option to use a StringBuffer vs StringBuilder.
+        // I'm not sure which is more appropriate.
+        // I don't really get how the ^ works in the regex here. I understand
+        // what it normally does, but don't see how its removal inverts the
+        // behaviour in this case.
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        // https://leetcode.com/problems/invert-binary-tree/
+        if (root == null) {
+            return root;
+        }
+
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+
+        root.left = right;
+        root.right = left;
+
+        return root;
+
+        // Notes:
+        // Had to look this up, misunderstood the question at first
+        // (thought it only wanted the root inverted).
+    }
+
+    public boolean isAnagram(String s, String t) {
+        // https://leetcode.com/problems/valid-anagram/
+        if (s.length() != t.length()) {
+            return false;
+        }
+        Map<Character, Integer> characterCount = new HashMap<>();
+        for (char cInS : s.toCharArray()) {
+            characterCount.put(cInS, characterCount.getOrDefault(cInS, 0) + 1);
+        }
+        for (char cInT : t.toCharArray()) {
+            if (characterCount.get(cInT) == null) {
+                return false;
+            }
+            if (characterCount.get(cInT) == 1) {
+                characterCount.remove(cInT);
+            } else {
+                characterCount.put(cInT, characterCount.get(cInT) - 1);
+            }
+        }
+        return characterCount.keySet().isEmpty();
+
+        // Notes:
+        // I need a bit more practice with map methods. But had the
+        // algorithm down and just had to tinker.
+    }
 }

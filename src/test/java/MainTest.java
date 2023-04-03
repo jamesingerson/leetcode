@@ -359,7 +359,7 @@ class MainTest {
         var example1 = main.removeElement(new int[]{3, 2, 2, 3}, 3);
         assertThat(example1).isEqualTo(2);
 
-        var example2 = main.removeElement(new int[]{0,1,2,2,3,0,4,2}, 2);
+        var example2 = main.removeElement(new int[]{0, 1, 2, 2, 3, 0, 4, 2}, 2);
         assertThat(example2).isEqualTo(5);
 
         var test1 = main.removeElement(new int[]{}, 2);
@@ -422,5 +422,56 @@ class MainTest {
 
         var fail1 = main.mySqrt(2);
         assertThat(fail1).isEqualTo(1);
+    }
+
+    @Test
+    void maxProfit() {
+        var example1 = main.maxProfit(new int[]{7, 1, 5, 3, 6, 4});
+        assertThat(example1).isEqualTo(5);
+
+        var example2 = main.maxProfit(new int[]{7, 6, 4, 3, 1});
+        assertThat(example2).isEqualTo(0);
+
+        var test1 = main.maxProfit(new int[]{});
+        assertThat(test1).isEqualTo(0);
+
+        var test2 = main.maxProfit(new int[]{5});
+        assertThat(test2).isEqualTo(0);
+
+        var test3 = main.maxProfit(new int[]{5, 6});
+        assertThat(test3).isEqualTo(1);
+
+        var test4 = main.maxProfit(new int[]{6, 5});
+        assertThat(test4).isEqualTo(0);
+
+        var fail1 = main.maxProfit(new int[]{2, 4, 1});
+        assertThat(fail1).isEqualTo(2);
+    }
+
+    @Test
+    void isPalindromeString() {
+        var example1 = main.isPalindrome("A man, a plan, a canal: Panama");
+        assertThat(example1).isTrue();
+
+        var example2 = main.isPalindrome("race a car");
+        assertThat(example2).isFalse();
+
+        var example3 = main.isPalindrome(" ");
+        assertThat(example3).isTrue();
+    }
+
+    @Test
+    void isAnagram() {
+        var example1 = main.isAnagram("anagram", "nagaram");
+        assertThat(example1).isTrue();
+
+        var example2 = main.isAnagram("rat", "car");
+        assertThat(example2).isFalse();
+
+        var test1 = main.isAnagram("r", "c");
+        assertThat(test1).isFalse();
+
+        var test2 = main.isAnagram("r", "r");
+        assertThat(test2).isTrue();
     }
 }
