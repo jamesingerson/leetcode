@@ -474,4 +474,16 @@ class MainTest {
         var test2 = main.isAnagram("r", "r");
         assertThat(test2).isTrue();
     }
+
+    @Test
+    void numRescueBoats() {
+        var example1 = main.numRescueBoats(new int[]{1,2}, 3);
+        assertThat(example1).isEqualTo(1);
+
+        var example2 = main.numRescueBoats(new int[]{3,2,2,1}, 3);
+        assertThat(example2).isEqualTo(3);
+
+        var example3 = main.numRescueBoats(new int[]{3,5,3,4}, 5);
+        assertThat(example3).isEqualTo(4);
+    }
 }

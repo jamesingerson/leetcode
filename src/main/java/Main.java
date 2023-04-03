@@ -782,4 +782,118 @@ public class Main {
         // I need a bit more practice with map methods. But had the
         // algorithm down and just had to tinker.
     }
+
+    public int numRescueBoats(int[] people, int limit) {
+        // https://leetcode.com/problems/boats-to-save-people/
+        int min = 0;
+        int max = people.length - 1;
+        int boats = 0;
+        Arrays.sort(people);
+
+        while (min <= max) {
+            boats++;
+            if (people[min] + people[max] <= limit) {
+                min++;
+            }
+            max--;
+        }
+
+        return boats;
+
+        // Notes:
+        // Made a mistake, max must be decremented after the check.
+        // I also knew the array needed to be sorted, but didn't actually
+        // code that at first.
+    }
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        // https://leetcode.com/problems/flood-fill/
+        int startingColour = image[sr][sc];
+        if (color != startingColour) floodFillSearch(image, sr, sc, color, startingColour);
+        return image;
+
+        // Notes:
+        // I was trying to figure out how to do this with just the given
+        // method signature. I also got some of the conditions wrong.
+        // I've written it with braces, but there's probably an
+        // argument for not using them.
+        // You can also defensively check the conditions at the start of
+        // floodFillSearch rather than checking them pre-call.
+    }
+
+    public void floodFillSearch(int[][] image, int sr, int sc, int color, int oldColour) {
+        if (image[sr][sc] == oldColour) {
+            image[sr][sc] = color;
+            if (sr - 1 >= 0) {
+                floodFillSearch(image, sr - 1, sc, color, oldColour);
+            }
+            if (sc - 1 >= 0) {
+                floodFillSearch(image, sr, sc - 1, color, oldColour);
+            }
+            if (sr + 1 < image.length) {
+                floodFillSearch(image, sr + 1, sc, color, oldColour);
+            }
+            if (sc + 1 < image[0].length) {
+                floodFillSearch(image, sr, sc + 1, color, oldColour);
+            }
+        }
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        // https://leetcode.com/problems/balanced-binary-tree/
+        if (root == null) {
+            return true;
+        }
+
+        int leftHeight = treeHeight(root.left);
+        int rightHeight = treeHeight(root.right);
+
+        return Math.abs(rightHeight - leftHeight) <= 1 &&
+                isBalanced(root.left) && isBalanced(root.right);
+
+        // Notes:
+        // Forgot to add one in the height calculation, which was silly.
+        // Needed to && the child nodes being balanced as well, also silly.
+    }
+
+    public int treeHeight(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return 1 + Math.max(treeHeight(root.left), treeHeight(root.right));
+    }
+
+    public boolean hasCycle(ListNode head) {
+        // https://leetcode.com/problems/linked-list-cycle/
+        Set<ListNode> nodeSet = new HashSet<>();
+        while (head != null) {
+            if (!nodeSet.add(head)) {
+                return true;
+            }
+            head = head.next;
+        }
+        return false;
+
+        // Notes:
+        // This can also be achieved with fast/slow pointers
+        // looking at .next and .next.next until they're equal.
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root.val > p.val && root.val > q.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        }
+        if (root.val < p.val && root.val < q.val) {
+            return lowestCommonAncestor(root.right, p , q);
+        }
+        return root;
+
+        // Notes:
+        // One day I'll reflect on this and see it as obvious. But
+        // right now it feels like you either know it or you don't.
+        // There's also a pretty swish direct walk solution by
+        // multiplying the difference between the values and the targets
+        // and checking if it's bigger than 0 or not.
+    }
 }
