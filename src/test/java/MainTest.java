@@ -486,4 +486,16 @@ class MainTest {
         var example3 = main.numRescueBoats(new int[]{3,5,3,4}, 5);
         assertThat(example3).isEqualTo(4);
     }
+
+    @Test
+    void canConstruct() {
+        var example1 = main.canConstruct("a", "b");
+        assertThat(example1).isFalse();
+
+        var example2 = main.canConstruct("aa", "b");
+        assertThat(example2).isFalse();
+
+        var test1 = main.canConstruct("aa", "aab");
+        assertThat(test1).isTrue();
+    }
 }

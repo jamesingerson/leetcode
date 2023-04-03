@@ -881,11 +881,12 @@ public class Main {
     }
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
         if (root.val > p.val && root.val > q.val) {
             return lowestCommonAncestor(root.left, p, q);
         }
         if (root.val < p.val && root.val < q.val) {
-            return lowestCommonAncestor(root.right, p , q);
+            return lowestCommonAncestor(root.right, p, q);
         }
         return root;
 
@@ -895,5 +896,136 @@ public class Main {
         // There's also a pretty swish direct walk solution by
         // multiplying the difference between the values and the targets
         // and checking if it's bigger than 0 or not.
+    }
+
+    public int firstBadVersion(int n) {
+        // https://leetcode.com/problems/first-bad-version/
+
+        /* The isBadVersion API is defined in the parent class VersionControl.
+           boolean isBadVersion(int version); */
+
+        int min = 0;
+        int max = n;
+        int lowestBadVersion = n;
+
+        while (min <= max) {
+            int mid = (max + min) >>> 1;
+            if (isBadVersion(mid)) {
+                max = mid - 1;
+                if (mid < lowestBadVersion) {
+                    lowestBadVersion = mid;
+                }
+            } else {
+                min = mid + 1;
+            }
+        }
+        return lowestBadVersion;
+
+        // Notes:
+        // Trick here is that if you do the (mid + max) / 2 as
+        // your midpoint calculation, you'll overflow.
+    }
+
+    public boolean isBadVersion(int n) {
+        // just to quieten the compiler
+        return true;
+    }
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        // https://leetcode.com/problems/ransom-note/
+        Map<Character, Integer> charMap = new HashMap<>();
+        for (char charInMagazine : magazine.toCharArray()) {
+            charMap.put(charInMagazine,
+                    charMap.getOrDefault(charInMagazine, 0) + 1);
+        }
+        for (char charInNote : ransomNote.toCharArray()) {
+            if (charMap.get(charInNote) == null) {
+                return false;
+            }
+
+            int charCount = charMap.get(charInNote);
+            if (charCount == 1) {
+                charMap.remove(charInNote);
+            } else {
+                charMap.put(charInNote, --charCount);
+            }
+        }
+        return true;
+
+        // Notes:
+        // Could use .containsKey() rather than .get() == null
+    }
+
+    public ListNode reverseListStack(ListNode head) {
+        // https://leetcode.com/problems/reverse-linked-list/
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Stack<ListNode> nodeStack = new Stack<>();
+        while (head != null) {
+            nodeStack.push(head);
+            head = head.next;
+        }
+        ListNode reversedListHead = nodeStack.pop();
+        ListNode reversedListCurrent = reversedListHead;
+        while (!nodeStack.isEmpty()) {
+            reversedListCurrent.next = nodeStack.pop();
+            reversedListCurrent = reversedListCurrent.next;
+        }
+        reversedListCurrent.next = null;
+        return reversedListHead;
+
+        // Notes:
+        // So this works but is totally wrong, you can do this in place iteratively.
+        // I've implemented that below.
+    }
+
+    public ListNode reverseListIterative(ListNode head) {
+        // https://leetcode.com/problems/reverse-linked-list/
+
+        ListNode previous = null;
+        ListNode current = head;
+
+        // Until we've traversed the whole list
+        while (current != null) {
+            // The next node is the child of what we're currently looking at
+            ListNode next = current.next;
+            // The one we're looking at should point to the previous node
+            current.next = previous;
+            // For the next iteration, the current node will be "previous"
+            previous = current;
+            // For the next iteration, move to the next node
+            current = next;
+        }
+        // Return previous because we overshoot the list
+        return previous;
+
+        // Notes:
+        // There is also a recursive approach. I've implemented that below.
+        // if (head == null || head.next == null) return head;
+        // ListNode res = reverseList(head.next);
+        // head.next.next = head;
+        // head.next = null;
+        // return res;
+    }
+
+    public ListNode reverseList(ListNode head) {
+        // Base case, head or its child is null
+        if (head == null || head.next == null) {
+            return head;
+        }
+        // Recursive call, the reversed list is the reversed list of the
+        // next node until we've been through them all
+        ListNode reverse = reverseList(head.next);
+        // so at this stage you have a reversely sorted list that doesn't
+        // include you (where you = previous head of your own sublist)
+        // (you)     null <- (node) <- (node) [these have been reversed already]
+        // you need to set your next nodes next property to point at you
+        // rather than null
+        head.next.next = head;
+        // and you should take the role of pointing to null
+        // (because we're recursive, each node just assumes it's the last one)
+        head.next = null;
+        return reverse;
     }
 }
