@@ -498,4 +498,91 @@ class MainTest {
         var test1 = main.canConstruct("aa", "aab");
         assertThat(test1).isTrue();
     }
+
+    @Test
+    void containsDuplicate() {
+        var example1 = main.containsDuplicate(new int[]{1,2,3,1});
+        assertThat(example1).isTrue();
+
+        var example2 = main.containsDuplicate(new int[]{1,2,3,4});
+        assertThat(example2).isFalse();
+
+        var example3 = main.containsDuplicate(new int[]{1,1,1,3,3,4,3,2,4,2});
+        assertThat(example3).isTrue();
+    }
+
+    @Test
+    void climbStairs() {
+        var example1 = main.climbStairs(2);
+        assertThat(example1).isEqualTo(2);
+
+        var example2 = main.climbStairs(3);
+        assertThat(example2).isEqualTo(3);
+    }
+
+    @Test
+    void maxSubArray() {
+        var example1 = main.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4});
+        assertThat(example1).isEqualTo(6);
+
+        var example2 = main.maxSubArray(new int[]{1});
+        assertThat(example2).isEqualTo(1);
+
+        var example3 = main.maxSubArray(new int[]{5,4,-1,7,8});
+        assertThat(example3).isEqualTo(23);
+    }
+
+    @Test
+    void majorityElement() {
+        var example1 = main.majorityElement(new int[]{3,2,3});
+        assertThat(example1).isEqualTo(3);
+
+        var example2 = main.majorityElement(new int[]{2,2,1,1,1,2,2});
+        assertThat(example2).isEqualTo(2);
+    }
+
+    @Test
+    void partitionString() {
+        var example1 = main.partitionString("abacaba");
+        assertThat(example1).isEqualTo(4);
+
+        var example2 = main.partitionString("ssssss");
+        assertThat(example2).isEqualTo(6);
+    }
+
+    @Test
+    void longestPalindrome() {
+        var example1 = main.longestPalindrome("abccccdd");
+        assertThat(example1).isEqualTo(7);
+
+        var example2 = main.longestPalindrome("a");
+        assertThat(example2).isEqualTo(1);
+
+        var test1 = main.longestPalindrome("zzhhuuq");
+        assertThat(test1).isEqualTo(7);
+
+        var test2 = main.longestPalindrome("aga");
+        assertThat(test2).isEqualTo(3);
+
+        var test3 = main.longestPalindrome("kkllpa");
+        assertThat(test3).isEqualTo(5);
+
+        var test4 = main.longestPalindrome("kkxcllpa");
+        assertThat(test4).isEqualTo(5);
+    }
+
+    @Test
+    void addBinary() {
+        var example1 = main.addBinary("11", "1");
+        assertThat(example1).isEqualTo("100");
+
+        var example2 = main.addBinary("1010", "1011");
+        assertThat(example2).isEqualTo("10101");
+
+        var example3 = main.addBinary("1", "1001111");
+        assertThat(example3).isEqualTo("1010000");
+
+        var fail1 = main.addBinary("1111", "1111");
+        assertThat(fail1).isEqualTo("11110");
+    }
 }

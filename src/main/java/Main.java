@@ -1009,14 +1009,15 @@ public class Main {
         // return res;
     }
 
-    public ListNode reverseList(ListNode head) {
+    public ListNode reverseListRecursive(ListNode head) {
+        // https://leetcode.com/problems/reverse-linked-list/
         // Base case, head or its child is null
         if (head == null || head.next == null) {
             return head;
         }
         // Recursive call, the reversed list is the reversed list of the
         // next node until we've been through them all
-        ListNode reverse = reverseList(head.next);
+        ListNode reverse = reverseListRecursive(head.next);
         // so at this stage you have a reversely sorted list that doesn't
         // include you (where you = previous head of your own sublist)
         // (you)     null <- (node) <- (node) [these have been reversed already]
@@ -1027,5 +1028,250 @@ public class Main {
         // (because we're recursive, each node just assumes it's the last one)
         head.next = null;
         return reverse;
+    }
+
+    public boolean containsDuplicate(int[] nums) {
+        // https://leetcode.com/problems/contains-duplicate/
+        Set<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            if(!numSet.add(num)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int climbStairs(int n) {
+        // https://leetcode.com/problems/climbing-stairs/
+        int minor = 1;
+        int major = 1;
+
+        if (n == 0) {
+            return minor;
+        }
+
+        for (int i = 2; i <= n; i++) {
+            int current = minor + major;
+            minor = major;
+            major = current;
+        }
+
+        return major;
+
+        // Notes:
+        // This is just fibonacci except starting from 1 1 rather than 0 1.
+        // This is a space optimized variant. Which is good for getting
+        // fib(x) but not great if you want a list.
+    }
+
+    public int maxSubArray(int[] nums) {
+        // https://leetcode.com/problems/maximum-subarray/
+        int highestSum = Integer.MIN_VALUE;
+        int sumToPosition = 0;
+
+        for (int num : nums) {
+            sumToPosition += num;
+            if (sumToPosition > highestSum) {
+                highestSum = sumToPosition;
+            }
+            if (sumToPosition < 0) {
+                sumToPosition = 0;
+            }
+        }
+        return highestSum;
+
+        // Notes:
+        // This is called Kadane's algorithm.
+        // The trick is realising that if your running sum is less than
+        // zero, then you may as well throw out whatever you've got going
+        // and start fresh.
+    }
+
+    public ListNode middleNode(ListNode head) {
+        // https://leetcode.com/problems/middle-of-the-linked-list/
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        return slow;
+
+        // Notes:
+        // Felt pretty good arriving at this solution.
+    }
+
+    public int maxDepth(TreeNode root) {
+        // https://leetcode.com/problems/maximum-depth-of-binary-tree/
+        if (root == null) {
+            return 0;
+        }
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    int diameter = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        // https://leetcode.com/problems/diameter-of-binary-tree/
+        longestWalk(root);
+        return diameter;
+    }
+
+    public int longestWalk(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = longestWalk(root.left);
+        int right = longestWalk(root.right);
+
+        diameter = Math.max(diameter, left + right);
+
+        return Math.max(left, right) + 1;
+
+        // Notes:
+        // Had a nightmarish time getting this one right. Off by one
+        // all over the place. Had trouble navigating the fact that
+        // a class variable or otherwise object was needed instead of
+        // just passing an int down. Also tripped up making the initial call
+        // diameter = longestWalk(root); which is NOT what you want here.
+    }
+
+    public int majorityElement(int[] nums) {
+        // https://leetcode.com/problems/majority-element/
+        Map<Integer, Integer> numMap = new HashMap<>();
+        int greatestValue = Integer.MIN_VALUE;
+        int greatestKey = 0;
+        for (int num : nums) {
+            numMap.put(num, numMap.getOrDefault(num, 0) + 1);
+        }
+        for (int key : numMap.keySet()) {
+            if (numMap.get(key) > greatestValue) {
+                greatestKey = key;
+                greatestValue = numMap.get(key);
+            }
+        }
+        return greatestKey;
+
+        // Notes:
+        // This works, but it would've been better to put then immediately
+        // get and check if the value is over half the length. (Which was
+        // actually my first thought, but I wound up over engineering here.)
+        // Also, you can obviously sort and jump to (length - 1) / 2 for a
+        // more time, less space solution.
+    }
+
+    public int partitionString(String s) {
+        // https://leetcode.com/problems/optimal-partition-of-string/
+        int partitionCount = 1;
+        Set<Character> charSet = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            boolean newAddition = charSet.add(c);
+            if (!newAddition) {
+                partitionCount++;
+                charSet.clear();
+                charSet.add(c);
+            }
+        }
+        return partitionCount;
+
+        // Notes:
+        // Happy that I came up with this. Pretty straightforward once you
+        // realise you only care about the partition count and not the
+        // string itself. You can do some uber leet character math and bit
+        // manipulation and do it with no additional space.
+    }
+
+    public int longestPalindrome(String s) {
+        // https://leetcode.com/problems/longest-palindrome/
+        int oddCharacter = 0;
+        int pairedCharacters = 0;
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        int i = 0;
+        while (i <= chars.length - 1) {
+            if (i + 1 <= chars.length - 1 && chars[i] == chars[i + 1]) {
+                pairedCharacters++;
+                i++;
+            } else if (oddCharacter == 0 ) {
+                oddCharacter = 1;
+            }
+            i++;
+        }
+        return pairedCharacters * 2 + oddCharacter;
+
+        // Notes:
+        // Sort is expensive, but there's a low character limit here, so it's
+        // actually pretty performant. The alternative approach I also thought
+        // of that seems more common is a map (or a set). You only care about
+        // the count of odd letters because the result is either:
+        // length - oddCount + 1
+        // or length
+        // You can also do a frequency array. That's the solution which is
+        // faster than this.
+    }
+
+    public String addBinary(String a, String b) {
+        // https://leetcode.com/problems/add-binary/
+        int carry = 0;
+        int character = 0;
+        int aIndex = a.length() - 1;
+        int bIndex = b.length() - 1;
+        StringBuilder sum = new StringBuilder();
+
+        while (aIndex >= 0 || bIndex >= 0 || carry != 0) {
+            if (aIndex >= 0) {
+                character += a.charAt(aIndex) - '0';
+                aIndex--;
+            }
+            if (bIndex >= 0) {
+                character += b.charAt(bIndex) - '0';
+                bIndex--;
+            }
+            if (character == 2) {
+                if (carry == 0) {
+                    sum.append(0);
+                } else {
+                    sum.append(1);
+                }
+                carry = 1;
+            }
+            if (character == 1) {
+                if (carry == 0) {
+                    sum.append(1);
+                } else {
+                    sum.append(0);
+                }
+            }
+            if (character == 0) {
+                if (carry == 0) {
+                    sum.append(0);
+                } else {
+                    sum.append(1);
+                    carry = 0;
+                }
+            }
+            if (carry == 1 && aIndex == -1 && bIndex == -1) {
+                sum.append(1);
+                carry = 0;
+            }
+            character = 0;
+        }
+        return sum.reverse().toString();
+
+        // Notes:
+        // This is heinous and impractical compared to the God Mode solution:
+//        while (i >= 0 || j >= 0 || carry == 1) {
+//            if (i >= 0) {
+//                carry += a.charAt(i--) - '0';
+//            }
+//            if (j >= 0) {
+//                carry += b.charAt(j--) - '0';
+//            }
+//            sb.append(carry % 2);
+//            carry /= 2;
+//        }
+        // But it's my own machination and it works.
     }
 }
