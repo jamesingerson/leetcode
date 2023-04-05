@@ -1474,4 +1474,94 @@ public class Main {
         // Notes:
         // Feeling much more comfortable with basic tree stuff.
     }
+
+    public int minPartitions(String n) {
+        // https://leetcode.com/problems/partitioning-into-minimum-number-of-deci-binary-numbers/
+        char[] digits = n.toCharArray();
+        int minPartitions = 0;
+        for (char digit : digits) {
+            minPartitions = Math.max(minPartitions, digit - '0');
+        }
+        return minPartitions;
+
+        // Notes:
+        // Could just make an index value and iterate over charAt();
+        // Could also use a stream over the chars array.
+    }
+
+    public ListNode mergeNodes(ListNode head) {
+        // https://leetcode.com/problems/merge-nodes-in-between-zeros/
+        ListNode answerHead = new ListNode();
+        ListNode answerHelp = answerHead;
+        int runningSum = 0;
+        head = head.next;
+        while (head.next != null) {
+            runningSum += head.val;
+            if (head.val == 0) {
+                answerHelp.next = new ListNode(runningSum);
+                answerHelp = answerHelp.next;
+                runningSum = 0;
+            }
+            head = head.next;
+        }
+        answerHelp.next = new ListNode(runningSum);
+        return answerHead.next;
+
+        // Notes:
+        // I feel like (well, know) there's some way to write this such that
+        // the extra node at the end could be encapsulated in the loop.
+    }
+
+    public int[][] sortTheStudents(int[][] score, int k) {
+        // https://leetcode.com/problems/sort-the-students-by-their-kth-score/
+        Arrays.sort(score, (x, y) -> y[k] - x[k]);
+        return score;
+
+        // Notes:
+        // Had this completely correct from the get go but forgot that
+        // Arrays.sort operates in place without returning so got all confused.
+        // Battled with a comparator in a stream but then realised it's just
+        // this easy.
+    }
+
+    public int[] pivotArray(int[] nums, int pivot) {
+        // https://leetcode.com/problems/partition-array-according-to-given-pivot/
+        List<Integer> left = new ArrayList<>();
+        List<Integer> right = new ArrayList<>();
+        List<Integer> pivots = new ArrayList<>();
+        for (int num : nums) {
+            if (num < pivot) {
+                left.add(num);
+            } else if (num > pivot) {
+                right.add(num);
+            } else {
+                pivots.add(num);
+            }
+        }
+        left.addAll(pivots);
+        left.addAll(right);
+        return left.stream().mapToInt(x -> x).toArray();
+
+        // Notes:
+        // This is the noob way of doing this. Pivots should probably
+        // be a count and then fill.
+        // You can do this with an array of the same size as nums.
+        // Two pointers at far left and right, build towards middle.
+    }
+
+    public int maxWidthOfVerticalArea(int[][] points) {
+        // https://leetcode.com/problems/widest-vertical-area-between-two-points-containing-no-points/
+        Arrays.sort(points, (x, y) -> x[0] - y[0]);
+        int largestGapSeen = 0;
+        for (int i = 0; i < points.length - 2; i++) {
+            largestGapSeen = Math.max(largestGapSeen, points[i + 1][0] - points[i][0]);
+        }
+        return largestGapSeen;
+
+        // Notes:
+        // I took Intellij's advice and swapped my lambda with the comparator.
+        // This was actually a significant (by LeetCode's standards) performance
+        // hit. This was surprising as I'd assume the comparator would just expand
+        // to exactly the same check anyway, evidentally not.
+    }
 }
