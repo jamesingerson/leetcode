@@ -1312,4 +1312,166 @@ public class Main {
         // for cleanliness/efficiencies after I get things working.
         // Also was using an unneeded variable that I tidied up.
     }
+
+    public int[] buildArray(int[] nums) {
+        // https://leetcode.com/problems/build-array-from-permutation/
+        int[] answer = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            answer[i] = nums[nums[i]];
+        }
+        return answer;
+    }
+
+    public int[] leftRigthDifference(int[] nums) {
+        // https://leetcode.com/problems/left-and-right-sum-differences/
+        int[] leftSum = new int[nums.length];
+        int[] rightSum = new int[nums.length];
+        int[] answer = new int[nums.length];
+        int currentSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            leftSum[i] = currentSum;
+            currentSum += nums[i];
+        }
+        currentSum = 0;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            rightSum[i] = currentSum;
+            currentSum += nums[i];
+        }
+        for (int i = 0; i < nums.length; i++) {
+            answer[i] = Math.abs(leftSum[i] - rightSum[i]);
+        }
+        return answer;
+    }
+
+    public int numJewelsInStones(String jewels, String stones) {
+        // https://leetcode.com/problems/jewels-and-stones/
+        int jewelCount = 0;
+        char[] individualStones = stones.toCharArray();
+        for (char possibleJewel : individualStones) {
+            if (jewels.indexOf(possibleJewel) > -1) {
+                jewelCount++;
+            }
+        }
+        return jewelCount;
+    }
+
+    public int smallestEvenMultiple(int n) {
+        // https://leetcode.com/problems/smallest-even-multiple/
+        if (n % 2 == 0) {
+            return n;
+        }
+        return n * 2;
+    }
+
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        // https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/
+        int highestCandies = Arrays.stream(candies).max().orElse(0);
+        List<Boolean> willHaveMost = new ArrayList<>();
+        for (int childsCandies : candies) {
+            if (childsCandies + extraCandies >= highestCandies) {
+                willHaveMost.add(true);
+            } else {
+                willHaveMost.add(false);
+            }
+        }
+        return willHaveMost;
+
+        // Notes:
+        // Could (should?) obviously find the max value by iterating,
+        // but streams are cool.
+    }
+
+    public int mostWordsFound(String[] sentences) {
+        // https://leetcode.com/problems/maximum-number-of-words-found-in-sentences/
+        return Arrays.stream(sentences)
+                .mapToInt(x -> x.split(" ").length)
+                .max().orElse(0);
+
+        // Notes:
+        // Could iterate but streams are cool. An interesting alternative
+        // iterative solution involved StringTokenizer.
+    }
+
+    public int minimizeArrayValue(int[] nums) {
+        // https://leetcode.com/problems/minimize-maximum-of-array/
+        long sum = 0;
+        long result = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            sum += nums[i];
+            result = Math.max(result, (sum + i) / (i + 1));
+        }
+        return (int) result;
+
+        // Notes:
+        // I understand the implementation, but not how to see it
+        // in the first place. Somehow you're supposed to realise that
+        // the proposed operation doesn't actually change the sum and
+        // therefore conclude that the upper boundary is this offset average.
+    }
+
+    public int minimumSum(int num) {
+        // https://leetcode.com/problems/minimum-sum-of-four-digit-number-after-splitting-digits/
+        int[] digits = new int[4];
+        for (int i = 0; i <= 3; i++) {
+            digits[i] = num % 10;
+            num /= 10;
+        }
+        Arrays.sort(digits);
+        int num1 = 0;
+        int num2 = 0;
+        for (int i = 0; i <= 3; i++) {
+            if ((i + 1) % 2 != 0) {
+                num1 *= 10;
+                num1 += digits[i];
+            } else {
+                num2 *= 10;
+                num2 += digits[i];
+            }
+        }
+        return num1 + num2;
+
+        // Notes:
+        // The second iteration here is overkill. Because we know it's 4 digits,
+        // we can hard code it. On the other hand, if I changed the array size
+        // and indices to be calculated on log 10 of num, then this would
+        // generalize to arbitrarily sized positive numbers;
+    }
+
+    public int subtractProductAndSum(int n) {
+        // https://leetcode.com/problems/subtract-the-product-and-sum-of-digits-of-an-integer/
+        int sum = 0;
+        int product = 1;
+        int[] digits = new int[(int) (Math.log10(n) + 1)];
+        int i = 0;
+        while (n > 0) {
+            digits[i] = n % 10;
+            n /= 10;
+            i++;
+        }
+        for (int digit : digits) {
+            sum += digit;
+            product *= digit;
+        }
+        return product - sum;
+
+        // Notes:
+        // Storing the digits here is overkill, can just slap them straight
+        // into sum and product.
+    }
+
+    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+        // https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/
+        if (cloned == null) {
+            return null;
+        }
+        if (cloned.val == target.val) {
+            return cloned;
+        }
+        TreeNode leftSearch = getTargetCopy(original, cloned.left, target);
+        TreeNode rightSearch = getTargetCopy(original, cloned.right, target);
+        return leftSearch != null ? leftSearch : rightSearch;
+
+        // Notes:
+        // Feeling much more comfortable with basic tree stuff.
+    }
 }
