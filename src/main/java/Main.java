@@ -1034,7 +1034,7 @@ public class Main {
         // https://leetcode.com/problems/contains-duplicate/
         Set<Integer> numSet = new HashSet<>();
         for (int num : nums) {
-            if(!numSet.add(num)) {
+            if (!numSet.add(num)) {
                 return true;
             }
         }
@@ -1092,7 +1092,7 @@ public class Main {
         ListNode fast = head;
         ListNode slow = head;
 
-        while(fast != null && fast.next != null) {
+        while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
@@ -1112,6 +1112,7 @@ public class Main {
     }
 
     int diameter = 0;
+
     public int diameterOfBinaryTree(TreeNode root) {
         // https://leetcode.com/problems/diameter-of-binary-tree/
         longestWalk(root);
@@ -1194,7 +1195,7 @@ public class Main {
             if (i + 1 <= chars.length - 1 && chars[i] == chars[i + 1]) {
                 pairedCharacters++;
                 i++;
-            } else if (oddCharacter == 0 ) {
+            } else if (oddCharacter == 0) {
                 oddCharacter = 1;
             }
             i++;
@@ -1273,5 +1274,42 @@ public class Main {
 //            carry /= 2;
 //        }
         // But it's my own machination and it works.
+    }
+
+    public int evalRPN(String[] tokens) {
+        // https://leetcode.com/problems/evaluate-reverse-polish-notation/
+        Stack<Integer> polishNotation = new Stack<>();
+        for (String token : tokens) {
+            switch (token) {
+                case ("+") -> {
+                    polishNotation.push(polishNotation.pop()
+                            + polishNotation.pop());
+                }
+                case ("-") -> {
+                    int subtract = polishNotation.pop();
+                    polishNotation.push(polishNotation.pop()
+                            - subtract);
+                }
+                case ("/") -> {
+                    int denominator = polishNotation.pop();
+                    polishNotation.push(polishNotation.pop()
+                            / denominator);
+                }
+                case ("*") -> {
+                    polishNotation.push(polishNotation.pop()
+                            * polishNotation.pop());
+                }
+                default -> polishNotation.push(Integer.parseInt(token));
+            }
+        }
+        return polishNotation.pop();
+
+        // Notes:
+        // I realised that division is "directional" but didn't catch that
+        // subtraction is as well at first.
+        // I initially ran with a string stack. This was bulky/cumbersome.
+        // Much cleaner to have refactored. Need to make a habit of reviewing
+        // for cleanliness/efficiencies after I get things working.
+        // Also was using an unneeded variable that I tidied up.
     }
 }

@@ -477,13 +477,13 @@ class MainTest {
 
     @Test
     void numRescueBoats() {
-        var example1 = main.numRescueBoats(new int[]{1,2}, 3);
+        var example1 = main.numRescueBoats(new int[]{1, 2}, 3);
         assertThat(example1).isEqualTo(1);
 
-        var example2 = main.numRescueBoats(new int[]{3,2,2,1}, 3);
+        var example2 = main.numRescueBoats(new int[]{3, 2, 2, 1}, 3);
         assertThat(example2).isEqualTo(3);
 
-        var example3 = main.numRescueBoats(new int[]{3,5,3,4}, 5);
+        var example3 = main.numRescueBoats(new int[]{3, 5, 3, 4}, 5);
         assertThat(example3).isEqualTo(4);
     }
 
@@ -501,13 +501,13 @@ class MainTest {
 
     @Test
     void containsDuplicate() {
-        var example1 = main.containsDuplicate(new int[]{1,2,3,1});
+        var example1 = main.containsDuplicate(new int[]{1, 2, 3, 1});
         assertThat(example1).isTrue();
 
-        var example2 = main.containsDuplicate(new int[]{1,2,3,4});
+        var example2 = main.containsDuplicate(new int[]{1, 2, 3, 4});
         assertThat(example2).isFalse();
 
-        var example3 = main.containsDuplicate(new int[]{1,1,1,3,3,4,3,2,4,2});
+        var example3 = main.containsDuplicate(new int[]{1, 1, 1, 3, 3, 4, 3, 2, 4, 2});
         assertThat(example3).isTrue();
     }
 
@@ -522,22 +522,22 @@ class MainTest {
 
     @Test
     void maxSubArray() {
-        var example1 = main.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4});
+        var example1 = main.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4});
         assertThat(example1).isEqualTo(6);
 
         var example2 = main.maxSubArray(new int[]{1});
         assertThat(example2).isEqualTo(1);
 
-        var example3 = main.maxSubArray(new int[]{5,4,-1,7,8});
+        var example3 = main.maxSubArray(new int[]{5, 4, -1, 7, 8});
         assertThat(example3).isEqualTo(23);
     }
 
     @Test
     void majorityElement() {
-        var example1 = main.majorityElement(new int[]{3,2,3});
+        var example1 = main.majorityElement(new int[]{3, 2, 3});
         assertThat(example1).isEqualTo(3);
 
-        var example2 = main.majorityElement(new int[]{2,2,1,1,1,2,2});
+        var example2 = main.majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2});
         assertThat(example2).isEqualTo(2);
     }
 
@@ -584,5 +584,14 @@ class MainTest {
 
         var fail1 = main.addBinary("1111", "1111");
         assertThat(fail1).isEqualTo("11110");
+    }
+
+    @Test
+    void evalRPN() {
+        var example1 = main.evalRPN(new String[]{"2", "1", "+", "3", "*"});
+        assertThat(example1).isEqualTo(9);
+
+        var example2 = main.evalRPN(new String[]{"4", "13", "5", "/", "+"});
+        assertThat(example2).isEqualTo(6);
     }
 }
