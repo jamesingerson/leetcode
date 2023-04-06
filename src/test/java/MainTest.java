@@ -631,11 +631,11 @@ class MainTest {
     @Test
     void numIslands() {
         var example1 = main.numIslands(new char[][]{
-                        new char[]{'1', '1', '1', '1', '0'},
-                        new char[]{'1', '1', '0', '1', '0'},
-                        new char[]{'1', '1', '0', '0', '0'},
-                        new char[]{'0', '0', '0', '0', '0'}
-                });
+                new char[]{'1', '1', '1', '1', '0'},
+                new char[]{'1', '1', '0', '1', '0'},
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'0', '0', '0', '0', '0'}
+        });
         assertThat(example1).isEqualTo(1);
 
         var example2 = main.numIslands(new char[][]{
@@ -650,32 +650,53 @@ class MainTest {
     @Test
     void closedIsland() {
         var example1 = main.closedIsland(new int[][]{
-                new int[]{1,1,1,1,1,1,1,0},
-                new int[]{1,0,0,0,0,1,1,0},
-                new int[]{1,0,1,0,1,1,1,0},
-                new int[]{1,0,0,0,0,1,0,1},
-                new int[]{1,1,1,1,1,1,1,0}
+                new int[]{1, 1, 1, 1, 1, 1, 1, 0},
+                new int[]{1, 0, 0, 0, 0, 1, 1, 0},
+                new int[]{1, 0, 1, 0, 1, 1, 1, 0},
+                new int[]{1, 0, 0, 0, 0, 1, 0, 1},
+                new int[]{1, 1, 1, 1, 1, 1, 1, 0}
 
         });
         assertThat(example1).isEqualTo(2);
 
         var example2 = main.closedIsland(new int[][]{
-                new int[]{0,0,1,0,0},
-                new int[]{0,1,0,1,0},
-                new int[]{0,1,1,1,0},
+                new int[]{0, 0, 1, 0, 0},
+                new int[]{0, 1, 0, 1, 0},
+                new int[]{0, 1, 1, 1, 0},
         });
         assertThat(example2).isEqualTo(1);
 
         var example3 = main.closedIsland(new int[][]{
-                new int[]{1,1,1,1,1,1,1},
-                new int[]{1,0,0,0,0,0,1},
-                new int[]{1,0,1,1,1,0,1},
-                new int[]{1,0,1,0,1,0,1},
-                new int[]{1,0,1,1,1,0,1},
-                new int[]{1,0,0,0,0,0,1},
-                new int[]{1,1,1,1,1,1,1}
+                new int[]{1, 1, 1, 1, 1, 1, 1},
+                new int[]{1, 0, 0, 0, 0, 0, 1},
+                new int[]{1, 0, 1, 1, 1, 0, 1},
+                new int[]{1, 0, 1, 0, 1, 0, 1},
+                new int[]{1, 0, 1, 1, 1, 0, 1},
+                new int[]{1, 0, 0, 0, 0, 0, 1},
+                new int[]{1, 1, 1, 1, 1, 1, 1}
 
         });
         assertThat(example3).isEqualTo(2);
+    }
+
+    @Test
+    void decode() {
+        var example1 = main.decode(new int[]{1, 2, 3}, 1);
+        assertThat(example1).isEqualTo(new int[]{1, 0, 2, 1});
+
+        var example2 = main.decode(new int[]{6, 2, 7, 3}, 4);
+        assertThat(example2).isEqualTo(new int[]{4, 2, 0, 7, 4});
+    }
+
+    @Test
+    void balancedStringSplit() {
+        var example1 = main.balancedStringSplit("RLRRLLRLRL");
+        assertThat(example1).isEqualTo(4);
+
+        var example2 = main.balancedStringSplit("RLRRRLLRLL");
+        assertThat(example2).isEqualTo(2);
+
+        var example3 = main.balancedStringSplit("LLLLRRRR");
+        assertThat(example3).isEqualTo(1);
     }
 }

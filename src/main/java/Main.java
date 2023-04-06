@@ -1694,4 +1694,82 @@ public class Main {
             markIsland(grid, x, y + 1, mark);
         }
     }
+
+    public int[] decode(int[] encoded, int first) {
+        // https://leetcode.com/problems/decode-xored-array/
+        int[] decoded = new int[encoded.length + 1];
+        decoded[0] = first;
+        for (int i = 0; i < decoded.length - 1; i++) {
+            decoded[i + 1] = decoded[i] ^ encoded[i];
+        }
+        return decoded;
+
+        // Notes:
+        // I knew XOR was the inverse of XOR, but struggled to get this:
+        // decoded[i + 1] = decoded[i] ^ encoded[i];
+        // the right way around because of how the question was worded.
+    }
+
+    public int[] findArray(int[] pref) {
+        // https://leetcode.com/problems/find-the-original-array-of-prefix-xor/
+        int[] decoded = new int[pref.length];
+        decoded[0] = pref[0];
+        for (int i = 0; i < decoded.length - 1; i++) {
+            decoded[i + 1] = decoded[i] ^ pref[i];
+        }
+        return decoded;
+
+        // Notes:
+        // Funnily enough, found this question after the above. This:
+        // decoded[i + 1] = decoded[i] ^ pref[i];
+        // It actually how I wrote the earlier question.
+    }
+
+    public int balancedStringSplit(String s) {
+        // https://leetcode.com/problems/split-a-string-in-balanced-strings/
+        int balancedStringCount = 0;
+        int currentStringValue = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'R') {
+                currentStringValue++;
+            } else if (s.charAt(i) == 'L') {
+                currentStringValue--;
+            }
+            if (currentStringValue == 0) {
+                balancedStringCount++;
+            }
+        }
+        return balancedStringCount;
+
+        // Notes:
+        // Else if rather than if if has a performance gain here.
+        // I'd wondered if the compiler would be smart enough to
+        // optimize, guess not.
+    }
+
+    int rangeSumBST = 0;
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        // https://leetcode.com/problems/range-sum-of-bst/
+        if (root == null) {
+            return 0;
+        }
+        if (root.val >= low && root.val <= high) {
+            rangeSumBST += root.val;
+        }
+        if (root.val > low) {
+            rangeSumBST(root.left, low, high);
+        }
+        if (root.val < high) {
+            rangeSumBST(root.right, low, high);
+        }
+        return rangeSumBST;
+
+        // Notes:
+        // I need to remember to be careful when handling member variables/fields.
+        // Tried to += the calls on left and right, that was not smart.
+        // Also, I didn't abuse the fact that this is a binary tree at first.
+        // Only need to check left if the value is bigger than the lowest.
+        // Only need to check right if the value is bigger than the highest.
+    }
+
 }
