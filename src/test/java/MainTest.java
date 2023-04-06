@@ -627,4 +627,55 @@ class MainTest {
         var example2 = main.triangularSum(new int[]{5});
         assertThat(example2).isEqualTo(5);
     }
+
+    @Test
+    void numIslands() {
+        var example1 = main.numIslands(new char[][]{
+                        new char[]{'1', '1', '1', '1', '0'},
+                        new char[]{'1', '1', '0', '1', '0'},
+                        new char[]{'1', '1', '0', '0', '0'},
+                        new char[]{'0', '0', '0', '0', '0'}
+                });
+        assertThat(example1).isEqualTo(1);
+
+        var example2 = main.numIslands(new char[][]{
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'1', '1', '0', '0', '0'},
+                new char[]{'0', '0', '1', '0', '0'},
+                new char[]{'0', '0', '0', '1', '1'}
+        });
+        assertThat(example2).isEqualTo(3);
+    }
+
+    @Test
+    void closedIsland() {
+        var example1 = main.closedIsland(new int[][]{
+                new int[]{1,1,1,1,1,1,1,0},
+                new int[]{1,0,0,0,0,1,1,0},
+                new int[]{1,0,1,0,1,1,1,0},
+                new int[]{1,0,0,0,0,1,0,1},
+                new int[]{1,1,1,1,1,1,1,0}
+
+        });
+        assertThat(example1).isEqualTo(2);
+
+        var example2 = main.closedIsland(new int[][]{
+                new int[]{0,0,1,0,0},
+                new int[]{0,1,0,1,0},
+                new int[]{0,1,1,1,0},
+        });
+        assertThat(example2).isEqualTo(1);
+
+        var example3 = main.closedIsland(new int[][]{
+                new int[]{1,1,1,1,1,1,1},
+                new int[]{1,0,0,0,0,0,1},
+                new int[]{1,0,1,1,1,0,1},
+                new int[]{1,0,1,0,1,0,1},
+                new int[]{1,0,1,1,1,0,1},
+                new int[]{1,0,0,0,0,0,1},
+                new int[]{1,1,1,1,1,1,1}
+
+        });
+        assertThat(example3).isEqualTo(2);
+    }
 }

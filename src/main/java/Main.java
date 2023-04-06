@@ -1611,4 +1611,87 @@ public class Main {
         // You can write this recursively as depth first search,
         // but in this case I don't really see the merit.
     }
+
+    public int numIslands(char[][] grid) {
+        // https://leetcode.com/problems/number-of-islands/
+        int numIslands = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == '1') {
+                    numIslands++;
+                    markIsland(grid, i, j, '*');
+                }
+            }
+        }
+        return numIslands;
+    }
+
+    public void markIsland(char[][] grid, int x, int y, char mark) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+            return;
+        }
+        if (grid[x][y] == '1') {
+            grid[x][y] = mark;
+            markIsland(grid, x - 1, y, mark);
+            markIsland(grid, x, y - 1, mark);
+            markIsland(grid, x + 1, y, mark);
+            markIsland(grid, x, y + 1, mark);
+        }
+    }
+
+    public int closedIsland(int[][] grid) {
+        // https://leetcode.com/problems/number-of-closed-islands/description/
+        int numIslands = 0;
+
+        // Mark outer row islands as seen (because they don't count)
+        for (int i = 0; i < grid.length; i++) {
+            if (grid[i][0] == 0) {
+                markIsland(grid, i, 0, -1);
+            }
+            if (grid[i][grid[0].length - 1] == 0) {
+                markIsland(grid, i, grid[0].length - 1, -1);
+            }
+        }
+
+        // Mark outer column islands as seen (because they don't count)
+        for (int i = 0; i < grid[0].length; i++) {
+            if (grid[0][i] == 0) {
+                markIsland(grid, 0, i, -1);
+            }
+            if (grid[grid.length - 1][i] == 0) {
+                markIsland(grid, grid.length - 1, i, -1);
+            }
+        }
+
+        // Count remaining islands
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 0) {
+                    numIslands++;
+                    markIsland(grid, i, j, -1);
+                }
+            }
+        }
+        return numIslands;
+
+        // Notes:
+        // Got caught on the inversion of island and land number
+        // from an earlier problem. Can probably remove the edges
+        // from the remaining isle count.
+        // Can probably simplify the edge clear as well, but this
+        // way, it's apparent what's going on, if verbose.
+    }
+
+    public void markIsland(int[][] grid, int x, int y, int mark) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+            return;
+        }
+        if (grid[x][y] == 0) {
+            grid[x][y] = mark;
+            markIsland(grid, x - 1, y, mark);
+            markIsland(grid, x, y - 1, mark);
+            markIsland(grid, x + 1, y, mark);
+            markIsland(grid, x, y + 1, mark);
+        }
+    }
 }
