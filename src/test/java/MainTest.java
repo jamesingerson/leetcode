@@ -594,4 +594,37 @@ class MainTest {
         var example2 = main.evalRPN(new String[]{"4", "13", "5", "/", "+"});
         assertThat(example2).isEqualTo(6);
     }
+
+    @Test
+    void maxCoins() {
+        var example1 = main.maxCoins(new int[]{2, 4, 5});
+        assertThat(example1).isEqualTo(4);
+
+        var example2 = main.maxCoins(new int[]{9, 8, 7, 6, 5, 1, 2, 3, 4});
+        assertThat(example2).isEqualTo(18);
+    }
+
+    @Test
+    void countDistinctIntegers() {
+        var example1 = main.countDistinctIntegers(new int[]{1, 13, 10, 12, 31});
+        assertThat(example1).isEqualTo(6);
+
+        var example2 = main.countDistinctIntegers(new int[]{2, 2, 2});
+        assertThat(example2).isEqualTo(1);
+
+        var test1 = main.countDistinctIntegers(new int[]{2});
+        assertThat(test1).isEqualTo(1);
+
+        var test2 = main.countDistinctIntegers(new int[]{20000, 20001, 20002});
+        assertThat(test2).isEqualTo(5);
+    }
+
+    @Test
+    void triangularSum() {
+        var example1 = main.triangularSum(new int[]{1, 2, 3, 4, 5});
+        assertThat(example1).isEqualTo(8);
+
+        var example2 = main.triangularSum(new int[]{5});
+        assertThat(example2).isEqualTo(5);
+    }
 }

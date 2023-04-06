@@ -1562,6 +1562,53 @@ public class Main {
         // I took Intellij's advice and swapped my lambda with the comparator.
         // This was actually a significant (by LeetCode's standards) performance
         // hit. This was surprising as I'd assume the comparator would just expand
-        // to exactly the same check anyway, evidentally not.
+        // to exactly the same check anyway, evidently not.
+    }
+
+    public int maxCoins(int[] piles) {
+        // https://leetcode.com/problems/maximum-number-of-coins-you-can-get/
+        Arrays.sort(piles);
+        int sum = 0;
+        int totalPiles = piles.length / 3;
+        for (int i = piles.length - 2; i > (piles.length - 2) - (2 * totalPiles); i -= 2) {
+            sum += piles[i];
+        }
+        return sum;
+
+        // Notes:
+        // There's probably too much logic in the for loop condition.
+    }
+
+    public int countDistinctIntegers(int[] nums) {
+        // https://leetcode.com/problems/count-number-of-distinct-integers-after-reverse-operations/
+        Set<Integer> uniqueNums = new HashSet<>();
+        int reversedNum = 0;
+        for (int num : nums) {
+            uniqueNums.add(num);
+            reversedNum = 0;
+            while (num > 0) {
+                reversedNum *= 10;
+                reversedNum += num % 10;
+                num /= 10;
+            }
+            uniqueNums.add(reversedNum);
+        }
+        return uniqueNums.size();
+    }
+
+    public int triangularSum(int[] nums) {
+        // https://leetcode.com/problems/find-triangular-sum-of-an-array/
+        while (nums.length != 1) {
+            int[] newNums = new int[nums.length - 1];
+            for (int i = 0; i < nums.length - 1; i++) {
+                newNums[i] = (nums[i] + nums[i + 1]) % 10;
+            }
+            nums = newNums;
+        }
+        return nums[0];
+
+        // Notes:
+        // You can write this recursively as depth first search,
+        // but in this case I don't really see the merit.
     }
 }
