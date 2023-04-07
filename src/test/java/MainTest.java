@@ -699,4 +699,65 @@ class MainTest {
         var example3 = main.balancedStringSplit("LLLLRRRR");
         assertThat(example3).isEqualTo(1);
     }
+
+    @Test
+    void getSum() {
+        var example1 = main.getSum(1, 2);
+        assertThat(example1).isEqualTo(3);
+
+        var example2 = main.getSum(2, 3);
+        assertThat(example2).isEqualTo(5);
+
+        var test1 = main.getSum(-10, 17);
+        assertThat(test1).isEqualTo(7);
+
+        var test2 = main.getSum(-100, 3);
+        assertThat(test2).isEqualTo(-97);
+
+        var test3 = main.getSum(0, 5);
+        assertThat(test3).isEqualTo(5);
+
+        var test4 = main.getSum(12, 0);
+        assertThat(test4).isEqualTo(12);
+    }
+
+    @Test
+    void numEnclaves() {
+        var fail1 = main.numEnclaves(new int[][]{
+                new int[]{0, 0, 0, 1, 1, 1, 0, 1, 0, 0},
+                new int[]{1, 1, 0, 0, 0, 1, 0, 1, 1, 1},
+                new int[]{0, 0, 0, 1, 1, 1, 0, 1, 0, 0},
+                new int[]{0, 1, 1, 0, 0, 0, 1, 0, 1, 0},
+                new int[]{0, 1, 1, 1, 1, 1, 0, 0, 1, 0},
+                new int[]{0, 0, 1, 0, 1, 1, 1, 1, 0, 1},
+                new int[]{0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+                new int[]{0, 0, 1, 0, 0, 1, 0, 1, 0, 1},
+                new int[]{1, 0, 1, 0, 1, 1, 0, 0, 0, 0},
+                new int[]{0, 0, 0, 0, 1, 1, 0, 0, 0, 1}
+        });
+        assertThat(fail1).isEqualTo(3);
+
+        var fail2 = main.numEnclaves(new int[][]{
+                new int[]{0,0,0,1,1,1,0,1,0,0},
+                new int[]{1,1,0,0,0,1,0,1,1,1},
+                new int[]{0,0,0,1,1,1,0,1,0,0},
+                new int[]{0,1,1,0,0,0,1,0,1,0},
+                new int[]{0,1,1,1,1,1,0,0,1,0},
+                new int[]{0,0,1,0,1,1,1,1,0,1},
+                new int[]{0,1,1,0,0,0,1,1,1,1},
+                new int[]{0,0,1,0,0,1,0,1,0,1},
+                new int[]{1,0,1,0,1,1,0,0,0,0},
+                new int[]{0,0,0,0,1,1,0,0,0,1}
+        });
+        assertThat(fail2).isEqualTo(3);
+
+        var fail3 = main.numEnclaves(new int[][]{
+                new int[]{0},
+                new int[]{1},
+                new int[]{1},
+                new int[]{0},
+                new int[]{0}
+        });
+        assertThat(fail3).isEqualTo(0);
+    }
 }

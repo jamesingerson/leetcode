@@ -1748,6 +1748,7 @@ public class Main {
     }
 
     int rangeSumBST = 0;
+
     public int rangeSumBST(TreeNode root, int low, int high) {
         // https://leetcode.com/problems/range-sum-of-bst/
         if (root == null) {
@@ -1772,4 +1773,68 @@ public class Main {
         // Only need to check right if the value is bigger than the highest.
     }
 
+    public int getSum(int a, int b) {
+        // https://leetcode.com/problems/sum-of-two-integers/
+        int carry = 0;
+        while (b != 0) {
+            carry = a & b;
+            a = a ^ b;
+            b = carry << 1;
+        }
+        return a;
+
+        // Notes:
+        // Where there is carry digits can be determined using AND.
+        // The "basic addition" is XOR.
+        // Carries are left shifted one (jump one place/house over).
+        // Then we have to do the addition of our previous value
+        // and the shifted carry(s). Repeat until we achieve the result.
+    }
+
+    int enclaveTileCount = 0;
+    public int numEnclaves(int[][] grid) {
+        // https://leetcode.com/problems/number-of-enclaves/
+        enclaveTileCount = 0;
+
+        // Remove islands touching external columns
+        for (int i = 0; i < grid[0].length; i++) {
+            markEnclave(grid, 0, i, -1);
+            markEnclave(grid, grid.length - 1, i, -1);
+        }
+
+        // Remove islands touching external rows
+        for (int i = 0; i < grid.length; i++) {
+            markEnclave(grid, i, 0, -1);
+            markEnclave(grid, i, grid[0].length - 1, -1);
+        }
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                markEnclave(grid, i, j, 2);
+            }
+        }
+        return enclaveTileCount;
+
+        // Notes:
+        // Got bitten by running my tests on the wrong method :(
+        // Then hit increasingly fringe off by one errors.
+        // Also discovered that leaving sout lying around is quite
+        // computationally expensive (in LeetCode terms).
+    }
+
+    public void markEnclave(int[][] grid, int x, int y, int mark) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length) {
+            return;
+        }
+        if (grid[x][y] == 1) {
+            grid[x][y] = mark;
+            if (mark == 2) {
+                enclaveTileCount++;
+            }
+            markEnclave(grid, x + 1, y, mark);
+            markEnclave(grid, x, y + 1, mark);
+            markEnclave(grid, x - 1, y, mark);
+            markEnclave(grid, x, y - 1, mark);
+        }
+    }
 }
