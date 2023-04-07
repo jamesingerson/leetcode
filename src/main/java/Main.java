@@ -1792,6 +1792,7 @@ public class Main {
     }
 
     int enclaveTileCount = 0;
+
     public int numEnclaves(int[][] grid) {
         // https://leetcode.com/problems/number-of-enclaves/
         enclaveTileCount = 0;
@@ -1836,5 +1837,191 @@ public class Main {
             markEnclave(grid, x - 1, y, mark);
             markEnclave(grid, x, y - 1, mark);
         }
+    }
+
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        // https://leetcode.com/problems/insert-interval/
+        List<int[]> allIntervals = new ArrayList<>();
+        int maxIndex = intervals.length - 1;
+        int i = 0;
+
+        while (i <= maxIndex && intervals[i][1] < newInterval[0]) {
+            allIntervals.add(intervals[i]);
+            i++;
+        }
+
+        while (i <= maxIndex && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+            newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
+            i++;
+        }
+        allIntervals.add(newInterval);
+
+        while (i <= maxIndex) {
+            allIntervals.add(intervals[i]);
+            i++;
+        }
+
+        return allIntervals.toArray(new int[allIntervals.size()][2]);
+
+        // Notes:
+        // I initially forgot to update newInterval[0]. Then I tried to optimize
+        // by doing it only once outside the loop, but missed the 0 length case.
+        // Could probably guard against this and save a repeated check.
+    }
+
+    Map<Integer, Node> cloneGraphMap = new HashMap<>();
+
+    public Node cloneGraph(Node node) {
+        // https://leetcode.com/problems/clone-graph/
+        if (node == null) {
+            return null;
+        }
+
+        if (cloneGraphMap.containsKey(node.val)) {
+            return cloneGraphMap.get(node.val);
+        }
+
+        Node cloneNode = new Node(node.val, new ArrayList<>());
+        cloneGraphMap.put(cloneNode.val, cloneNode);
+        for (Node neighbor : node.neighbors) {
+            cloneNode.neighbors.add(cloneGraph(cloneNode));
+        }
+        return cloneNode;
+
+        // Notes:
+        // This is a (recursive) depth first search implementation.
+        // Can also do this breadth first using a queue.
+        // Not sure if a "global" map is the best approach here,
+        // could have clone graph call a separate clone method and
+        // pass a local map around.
+        // Apparently this use of a map is a common pattern in graph questions.
+        // The gist of this is, return null if null, return the clone if
+        // we've got it already. Otherwise, make a fresh node, store it in the
+        // map against its value, then for each of its neighbours, make a clone.
+        // Note the Americanized spelling of neighbor.
+    }
+
+    public String interpret(String command) {
+        // https://leetcode.com/problems/goal-parser-interpretation/
+        return command
+                .replace("()", "o")
+                .replace("(al)", "al");
+
+        // Notes:
+        // You can squeeze more juice out of this for loops and character
+        // position checks and a string builder. Doesn't seem worthwhile.
+    }
+
+    public int[] createTargetArray(int[] nums, int[] index) {
+        // https://leetcode.com/problems/create-target-array-in-the-given-order/
+        List<Integer> target = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            target.add(index[i], nums[i]);
+        }
+        return target.stream().mapToInt(x -> x).toArray();
+
+        // Notes:
+        // You can add the nums[i], index[i] pair to an array list
+        // and then pull from that into the target array for maximum
+        // performance at the expense of code complexity.
+    }
+
+    public int[] decompressRLElist(int[] nums) {
+        // https://leetcode.com/problems/decompress-run-length-encoded-list/
+        List<Integer> decompressed = new ArrayList<>();
+        for (int i = 0; i < nums.length - 1; i += 2) {
+            for (int j = 1; j <= nums[i]; j++) {
+                decompressed.add(nums[i + 1]);
+            }
+        }
+        return decompressed.stream().mapToInt(x -> x).toArray();
+
+        // Notes:
+        // You can pre-calculate the size in one pass then do a second pass
+        // to populate if you wanna make the code zoom zoom.
+    }
+
+    public String restoreString(String s, int[] indices) {
+        // https://leetcode.com/problems/shuffle-string/
+        char[] restoredString = new char[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            restoredString[indices[i]] = s.charAt(i);
+        }
+        return new String(restoredString);
+
+        // Notes:
+        // I got tripped up thinking it was position i in the restored
+        // string and char at indices i.
+    }
+
+    public int differenceOfSum(int[] nums) {
+        // https://leetcode.com/problems/difference-between-element-sum-and-digit-sum-of-an-array/
+        int elementSum = 0;
+        int digitSum = 0;
+
+        for (int num : nums) {
+            elementSum += num;
+            while (num > 0) {
+                digitSum += num % 10;
+                num /= 10;
+            }
+        }
+        return Math.abs(elementSum - digitSum);
+
+        // Notes:
+        // Could have hardcoded the various magnitudes of division to
+        // cheese LeetCode performance metrics if I wanted to sweat.
+    }
+
+    public int countDigits(int num) {
+        // https://leetcode.com/problems/count-the-digits-that-divide-a-number/description/
+        int workingNum = num;
+        int divisor = 0;
+        int noRemainderCount = 0;
+        while (workingNum > 0) {
+            divisor = workingNum % 10;
+            workingNum /= 10;
+            if (num % divisor == 0) {
+                noRemainderCount++;
+            }
+        }
+        return noRemainderCount;
+    }
+
+    public int findCenter(int[][] edges) {
+        // https://leetcode.com/problems/find-center-of-star-graph/
+        return (edges[0][0] == edges[1][0]
+                || edges[0][0] == edges[1][1])
+                ? edges[0][0] : edges[0][1];
+
+        // Notes:
+        // This is cheese, because we know it's a star graph then the
+        // centre has to be one of the two values. If the first value in the
+        // first pair doesn't match either value in the second pair then
+        // it must be the second value in the first pair.
+    }
+
+    public String toLowerCase(String s) {
+        // https://leetcode.com/problems/to-lower-case/
+        return s.toLowerCase();
+
+        // Notes:
+        // Could check char range and do char math. But really?
+    }
+
+    public int countAsterisks(String s) {
+        // https://leetcode.com/problems/count-asterisks/
+        boolean inBars = false;
+        int asterisksCount = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '|') {
+                inBars = !inBars;
+            }
+            if (c == '*' && !inBars) {
+                asterisksCount++;
+            }
+        }
+        return asterisksCount;
     }
 }
