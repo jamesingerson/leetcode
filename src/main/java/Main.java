@@ -2024,4 +2024,40 @@ public class Main {
         }
         return asterisksCount;
     }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        // https://leetcode.com/problems/binary-tree-level-order-traversal/
+        List<List<Integer>> traversal = new ArrayList<>();
+        Queue<TreeNode> treeQueue = new LinkedList<>();
+        treeQueue.add(root);
+
+        while (!treeQueue.isEmpty()) {
+            int nodeCountInLevel = treeQueue.size();
+            List<Integer> nodesInLevel = new ArrayList<>();
+            for (int i = 1; i <= nodeCountInLevel; i++) {
+                TreeNode node = treeQueue.poll();
+                if (node != null) {
+                    nodesInLevel.add(node.val);
+                    treeQueue.add(node.left);
+                    treeQueue.add(node.right);
+                }
+            }
+            if (!nodesInLevel.isEmpty()) {
+                traversal.add(nodesInLevel);
+            }
+        }
+        return traversal;
+
+        // Notes:
+        // At first I had an unneeded null guard and started the loop at zero
+        // rather than one.
+        // You can actually do this recursively without a queue.
+        // The gist of this is:
+        // Initialize the queue with root
+        // While the queue is not empty
+        // Make a list for the nodes in this level, iterate for each enqueued node
+        // poll() (fifo get) the node, if it's not null, store its value and enqueue children
+        // if the list isn't empty, add it to the returned list
+        // return the list
+    }
 }
