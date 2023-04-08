@@ -2060,4 +2060,126 @@ public class Main {
         // if the list isn't empty, add it to the returned list
         // return the list
     }
+
+    public int deepestLeavesSum(TreeNode root) {
+        // https://leetcode.com/problems/deepest-leaves-sum/
+        int sum = 0;
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+
+        while (!nodeQueue.isEmpty()) {
+            sum = 0;
+            int treeWidth = nodeQueue.size();
+            for (int i = 1; i <= treeWidth; i++) {
+                TreeNode node = nodeQueue.poll();
+                if (node != null) {
+                    sum += node.val;
+                    if (node.left != null) {
+                        nodeQueue.add(node.left);
+                    }
+                    if (node.right != null) {
+                        nodeQueue.add(node.right);
+                    }
+                }
+            }
+        }
+        return sum;
+
+        // Notes:
+        // Can avoid double diving by only queuing when not null and
+        // simply falling out with the current sum.
+        // Could also DFS this by passing the level and resetting sum
+        // when you see a new level and only adding if you're
+        // at the right level.
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // https://leetcode.com/problems/same-tree/
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        return p.val == q.val
+                && isSameTree(p.left, q.left)
+                && isSameTree(p.right, q.right);
+
+        // Notes:
+        // I got caught up trying to make this a one-liner.
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        // https://leetcode.com/problems/symmetric-tree/
+        return treeSymmetry(root.left, root.right);
+    }
+
+    public boolean treeSymmetry(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        return p.val == q.val
+                && treeSymmetry(p.left, q.right)
+                && treeSymmetry(p.right, q.left);
+    }
+
+    public int minDepth(TreeNode root) {
+        // https://leetcode.com/problems/minimum-depth-of-binary-tree/
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        if (root.left == null) {
+            return 1 + minDepth(root.right);
+        }
+        if (root.right == null) {
+            return 1 + minDepth(root.left);
+        }
+        return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+
+        // Notes:
+        // I had the right idea at the start but got it slightly wrong.
+        // Started tacking things on making it more wrong, rather than
+        // dialling back and clearing the slate.
+    }
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        // https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
+        List<List<Integer>> traversalList = new ArrayList<>();
+        Stack<List<Integer>> traversalStack = new Stack<>();
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+
+        while (!nodeQueue.isEmpty()) {
+            int layerWidth = nodeQueue.size();
+            List<Integer> layerList = new ArrayList<>();
+            for (int i = 1; i <= layerWidth; i++) {
+                TreeNode node = nodeQueue.poll();
+                if (node != null) {
+                    layerList.add(node.val);
+                    if (node.left != null) {
+                        nodeQueue.add(node.left);
+                    }
+                    if (node.right != null) {
+                        nodeQueue.add(node.right);
+                    }
+                }
+            }
+            if (layerList.size() > 0) {
+                traversalStack.push(layerList);
+            }
+        }
+        while (!traversalStack.empty()) {
+            traversalList.add(traversalStack.pop());
+        }
+        return traversalList;
+
+        // Notes:
+        // You can just do a regular BFS layer traversal and reverse the list.
+    }
 }
