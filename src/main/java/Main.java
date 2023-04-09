@@ -2182,4 +2182,51 @@ public class Main {
         // Notes:
         // You can just do a regular BFS layer traversal and reverse the list.
     }
+
+    public int[][] updateMatrix(int[][] mat) {
+        // https://leetcode.com/problems/01-matrix/description/
+        Queue<int[]> coordinates = new LinkedList<>();
+        for (int x = 0; x < mat.length; x++) {
+            for (int y = 0; y < mat[0].length; y++) {
+                if (mat[x][y] == 0) {
+                    coordinates.offer(new int[]{x, y});
+                } else {
+                    mat[x][y] = -1;
+                }
+            }
+        }
+        int[][] cardinalDirections = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int distanceToZero = 0;
+        while (!coordinates.isEmpty()) {
+            int queueLength = coordinates.size();
+            distanceToZero++;
+            for (int i = 1; i <= queueLength; i++) {
+                int[] position = coordinates.poll();
+                for (int[] direction : cardinalDirections) {
+                    assert position != null;
+                    int x = position[0] + direction[0];
+                    int y = position[1] + direction[1];
+                    if (x >= 0 && y >= 0 && x < mat.length && y < mat[0].length) {
+                        if (mat[x][y] == -1) {
+                            mat[x][y] = distanceToZero;
+                            coordinates.offer(new int[]{x, y});
+                        }
+                    }
+                }
+            }
+        }
+        return mat;
+
+        // Notes:
+        // This is a BFS implementation, this can also be handled dynamically.
+        // We enqueue every 0 co-ordinate, and set all non-zeroes to -1, so they
+        // can be set to their correct value later.
+        // Then while there is still something in the queue, we check each
+        // direction from that position. If it's in bounds and not yet got a
+        // value, then set its distance value and enqueue it.
+        // Or, less abstractly, for each zero we know that its adjacent positions
+        // are one away from a zero (unless they are zero). Then for each one,
+        // we know its adjacent positions are two (unless they are already set).
+        // And so on.
+    }
 }
