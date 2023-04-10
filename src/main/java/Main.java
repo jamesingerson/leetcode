@@ -2229,4 +2229,48 @@ public class Main {
         // we know its adjacent positions are two (unless they are already set).
         // And so on.
     }
+
+    public int[][] kClosest(int[][] points, int k) {
+        // https://leetcode.com/problems/k-closest-points-to-origin/
+        Map<Double, List<int[]>> distanceMap = new TreeMap<>();
+
+        for (int[] point : points) {
+            double distanceFromOrigin = euclideanDistanceFromOrigin(point);
+            if (distanceMap.containsKey(distanceFromOrigin)) {
+                distanceMap.get(distanceFromOrigin).add(point);
+            } else {
+                distanceMap.put(distanceFromOrigin, new ArrayList<>(Collections.singletonList(point)));
+            }
+        }
+
+        int[][] kClosest = new int[k][2];
+        int i = 0;
+        for (Map.Entry<Double, List<int[]>> entry : distanceMap.entrySet()) {
+            for (int[] point : entry.getValue()) {
+                kClosest[i] = point;
+                i++;
+                if (i == k) {
+                    return kClosest;
+                }
+            }
+        }
+
+        return kClosest;
+
+        // Notes:
+        // This can also be done with a priority queue with a custom comparator.
+        // This solution leverages a tree map (red black tree) with natural
+        // ordering (because the shortest distance is what we're interested in).
+        // We keep a list of all points at each distance in the map.
+        // then for each entry, we grab the list and add points to the
+        // array we're going to return until it's full, or we run out of points.
+        // I need further practice with both tree maps and priority queues,
+        // I knew immediately that's the type of thing I wanted to use, but
+        // needed reference to get it right.
+    }
+
+    public double euclideanDistanceFromOrigin(int[] point) {
+        // √(x1 - x2)2 + (y1 - y2)2
+        return Math.sqrt((Math.pow(point[0], 2) + Math.pow(point[1], 2)));
+    }
 }
