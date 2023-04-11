@@ -760,4 +760,28 @@ class MainTest {
         });
         assertThat(fail3).isEqualTo(0);
     }
+
+    @Test
+    void removeStars() {
+        var example1 = main.removeStars("leet**cod*e");
+        assertThat(example1).isEqualTo("lecoe");
+
+        var example2 = main.removeStars("erase*****");
+        assertThat(example2).isEqualTo("");
+
+        var test1 = main.removeStars("*");
+        assertThat(test1).isEqualTo("");
+
+        var test2 = main.removeStars("**");
+        assertThat(test2).isEqualTo("");
+
+        var test3 = main.removeStars("a*");
+        assertThat(test3).isEqualTo("");
+
+        var test4 = main.removeStars("*a");
+        assertThat(test4).isEqualTo("a");
+
+        var test5 = main.removeStars("a");
+        assertThat(test5).isEqualTo("a");
+    }
 }

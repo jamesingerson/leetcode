@@ -2273,4 +2273,56 @@ public class Main {
         // √(x1 - x2)2 + (y1 - y2)2
         return Math.sqrt((Math.pow(point[0], 2) + Math.pow(point[1], 2)));
     }
+
+    public String removeStarsRegex(String s) {
+        // https://leetcode.com/problems/removing-stars-from-a-string/
+        while (s.contains("*")) {
+            s = s.replaceFirst("[a-z]?\\*", "");
+        }
+        return s;
+
+        // Notes:
+        // This solution gets a TLE.
+        // You can use a stack to do this, but there's an even better way.
+    }
+
+    public String removeStars(String s) {
+        // https://leetcode.com/problems/removing-stars-from-a-string/
+        StringBuilder starFreeString = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == '*') {
+                starFreeString.setLength(starFreeString.length() - 1);
+            } else {
+                starFreeString.append(c);
+            }
+        }
+        return starFreeString.toString();
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        // https://leetcode.com/problems/longest-substring-without-repeating-characters/
+        Set<Character> charSet = new HashSet<>();
+        int longestSeen = 0;
+        int minor = 0;
+
+        for (int major = 0; major < s.length(); major++) {
+            if (!charSet.contains(s.charAt(major))) {
+                charSet.add(s.charAt(major));
+                longestSeen = Math.max(longestSeen, major - minor + 1);
+            } else {
+                while (s.charAt(minor) != s.charAt(major)) {
+                    charSet.remove(s.charAt(minor));
+                    minor++;
+                }
+                charSet.remove(s.charAt(minor));
+                minor++;
+                charSet.add(s.charAt(major));
+            }
+        }
+        return longestSeen;
+
+        // Notes:
+        // Did this in a single pass at first, not thinking.
+        // Needs sliding window.
+    }
 }
