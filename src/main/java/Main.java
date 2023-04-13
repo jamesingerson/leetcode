@@ -2347,4 +2347,69 @@ public class Main {
         // element, pop it and move along.
         // If the stack is empty, then we've confirmed the stack sequence is valid.
     }
+
+    public int repeatedNTimes(int[] nums) {
+        // https://leetcode.com/problems/n-repeated-element-in-size-2n-array/description/
+        Set<Integer> uniqueNums = new HashSet<>();
+
+        for (int num : nums) {
+            if (!uniqueNums.add(num)) {
+                return num;
+            }
+        }
+        return -1;
+
+        // Notes:
+        // This question is a "one number occurs more than half the time,
+        // every other number is unique, find the recurring number".
+    }
+
+    public void deleteNode(ListNode node) {
+        // https://leetcode.com/problems/delete-node-in-a-linked-list/
+        node.val = node.next.val;
+        node.next = node.next.next;
+
+        // Notes:
+        // AKA: "Update this node to be the next node".
+    }
+
+    public void reverseString(char[] s) {
+        // https://leetcode.com/problems/reverse-string/
+        int min = 0;
+        int max = s.length - 1;
+        char hold;
+        while (min < max) {
+            hold = s[min];
+            s[min] = s[max];
+            s[max] = hold;
+            min++;
+            max--;
+        }
+
+        // Notes:
+        // You can express this in a pretty compact for loop:
+        // for(int i = 0, j = s.length - 1; i < j; i++, j--)
+    }
+
+    public boolean isSameAfterReversals(int num) {
+        // https://leetcode.com/problems/a-number-after-a-double-reversal/
+        int reversed1 = reverseNumber(num);
+        int reversed2 = reverseNumber(reversed1);
+        return num == reversed2;
+
+        // Notes:
+        // You can cheat the instructions and just return whether the number
+        // is not evenly divisible into 10 (will have leading 0s when reversed)
+        // or is 0.
+    }
+
+    public int reverseNumber(int num) {
+        int reversedNumber = 0;
+        while (num > 0) {
+            reversedNumber *= 10;
+            reversedNumber += num % 10;
+            num /=10;
+        }
+        return reversedNumber;
+    }
 }
