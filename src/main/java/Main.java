@@ -2325,4 +2325,26 @@ public class Main {
         // Did this in a single pass at first, not thinking.
         // Needs sliding window.
     }
+
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        // https://leetcode.com/problems/validate-stack-sequences/solutions/?languageTags=java
+        Stack<Integer> validationStack = new Stack<>();
+
+        int i = 0;
+        for (int pushedValue : pushed) {
+            validationStack.push(pushedValue);
+            while (!validationStack.isEmpty() && validationStack.peek() == popped[i]) {
+                validationStack.pop();
+                i++;
+            }
+        }
+        return validationStack.isEmpty();
+
+        // Notes:
+        // We attempt to do a "play through" to see if it's possible.
+        // Push the pushed elements one at a time.
+        // While there's stuff in the stack and the top element is the next popped
+        // element, pop it and move along.
+        // If the stack is empty, then we've confirmed the stack sequence is valid.
+    }
 }
